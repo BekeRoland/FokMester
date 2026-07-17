@@ -28,7 +28,7 @@ persistent local data, and automated testing.
 This project is source-available under the
 [PolyForm Noncommercial License 1.0.0](LICENSE.md).
 
-Commercial use is not permitted without prior written permission
+Commercial use is prohibited without prior written permission
 and a separate commercial license.
 
-For commercial licensing inquiries, contact: bekerola123@gmail.com
+See the [NOTICE](NOTICE) file for copyright information.
