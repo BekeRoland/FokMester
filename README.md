@@ -22,3 +22,13 @@ persistent local data, and automated testing.
 - Locally stored calculation history
 - Responsive Material 3 interface
 - Unit and widget tests
+
+## License
+
+This project is source-available under the
+[PolyForm Noncommercial License 1.0.0](LICENSE.md).
+
+Commercial use is not permitted without prior written permission
+and a separate commercial license.
+
+For commercial licensing inquiries, contact: bekerola123@gmail.com
