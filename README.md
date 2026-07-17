@@ -9,6 +9,10 @@ The project was built as a portfolio application with a focus on calculation
 accuracy, input validation, localization, accessibility, persistent local
 data, and automated testing.
 
+## Live demo
+
+[Open FokMester in your browser](https://bekeroland.github.io/FokMester/)
+
 ## Features
 
 - Alcohol-strength correction to 20 °C using two-dimensional interpolation
@@ -62,6 +66,12 @@ flutter test
 The current automated suite covers exact table values, interpolation,
 out-of-range measurements, incomplete source data, dilution, final-volume
 preparation, liquid mixing, and switching between all three languages.
+
+## GitHub Pages deployment
+
+Every push to `main` runs analysis and tests, creates a release Flutter web
+build with the `/FokMester/` base path, and deploys the generated `build/web`
+artifact to GitHub Pages.
 
 ## Project structure
 
