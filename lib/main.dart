@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
 import 'screens/dilution_screen.dart';
+import 'screens/mash_screen.dart';
 import 'screens/guide_screen.dart';
 import 'screens/history_screen.dart';
 import 'models/calculation_history.dart';
@@ -205,6 +206,7 @@ class _NavigationShellState extends State<NavigationShell> {
         children: [
           HomeScreen(onCalculated: _addHistory),
           DilutionScreen(onCalculated: _addHistory),
+          MashScreen(onCalculated: _addHistory),
           const GuideScreen(),
           HistoryScreen(items: _history, onClear: _clearHistory),
         ],
@@ -236,6 +238,11 @@ class _NavigationShellState extends State<NavigationShell> {
                 color: Color(0xFF7EB8D4),
               ),
               label: strings.tr('nav.dilution'),
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.grass_outlined, color: Color(0xFF4A6580)),
+              selectedIcon: Icon(Icons.grass_rounded, color: Color(0xFF7EB8D4)),
+              label: strings.tr('nav.mash'),
             ),
             NavigationDestination(
               icon: Icon(Icons.menu_book_outlined),

@@ -1,0 +1,483 @@
+import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart';
+import '../models/calculation_history.dart';
+import '../models/mash_fruit_profile.dart';
+import '../services/mash_calculator.dart';
+import '../utils/number_parser.dart';
+import '../widgets/input_field.dart';
+
+class MashScreen extends StatefulWidget {
+  final ValueChanged<CalculationHistoryItem> onCalculated;
+
+  const MashScreen({super.key, required this.onCalculated});
+
+  @override
+  State<MashScreen> createState() => _MashScreenState();
+}
+
+class _MashScreenState extends State<MashScreen> {
+  MashFruitProfile selectedFruit = mashFruitProfiles.first;
+  final mashAmountController = TextEditingController();
+  final yeastDoseController = TextEditingController(text: '20');
+  final brixController = TextEditingController();
+  MashCalculationResult? result;
+  String? errorKey;
+
+  @override
+  void dispose() {
+    mashAmountController.dispose();
+    yeastDoseController.dispose();
+    brixController.dispose();
+    super.dispose();
+  }
+
+  void _calculate() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    final amount = parseLocalizedNumber(mashAmountController.text);
+    final yeastDose = parseLocalizedNumber(yeastDoseController.text);
+    final brix = parseLocalizedNumber(brixController.text);
+    if (amount == null || yeastDose == null || brix == null) {
+      setState(() {
+        result = null;
+        errorKey = 'error.allNumbers';
+      });
+      return;
+    }
+
+    try {
+      final calculated = MashCalculator.calculate(
+        fruit: selectedFruit,
+        mashKg: amount,
+        yeastDoseGramsPer100Kg: yeastDose,
+        brix: brix,
+      );
+      final languageCode = Localizations.localeOf(context).languageCode;
+      setState(() {
+        result = calculated;
+        errorKey = null;
+      });
+      widget.onCalculated(
+        CalculationHistoryItem(
+          createdAt: DateTime.now(),
+          title: 'history.mash',
+          details:
+              '${selectedFruit.name(languageCode)}, ${_number(amount)} kg, ${_number(brix)} °Bx',
+          result:
+              '${calculated.potentialAbvMin.toStringAsFixed(1)}–${calculated.potentialAbvMax.toStringAsFixed(1)}%',
+        ),
+      );
+    } on MashCalculatorException catch (error) {
+      setState(() {
+        result = null;
+        errorKey = error.code;
+      });
+    }
+  }
+
+  String _number(double value, {int decimals = 1}) {
+    if (value == value.roundToDouble()) return value.toStringAsFixed(0);
+    return value.toStringAsFixed(decimals);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final strings = AppLocalizations.of(context);
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final brix = parseLocalizedNumber(brixController.text);
+
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        Text(strings.tr('mash.title'), style: theme.textTheme.headlineMedium),
+        const SizedBox(height: 6),
+        Text(strings.tr('mash.subtitle')),
+        const SizedBox(height: 20),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DropdownButtonFormField<MashFruitProfile>(
+                  initialValue: selectedFruit,
+                  isExpanded: true,
+                  decoration: InputDecoration(
+                    labelText: strings.tr('mash.fruit'),
+                    prefixIcon: const Icon(Icons.eco_outlined),
+                    border: const OutlineInputBorder(),
+                  ),
+                  items: mashFruitProfiles
+                      .map(
+                        (fruit) => DropdownMenuItem(
+                          value: fruit,
+                          child: Text(fruit.name(languageCode)),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (fruit) {
+                    if (fruit == null) return;
+                    setState(() {
+                      selectedFruit = fruit;
+                      result = null;
+                      errorKey = null;
+                    });
+                  },
+                ),
+                const SizedBox(height: 16),
+                InputField(
+                  controller: mashAmountController,
+                  label: strings.tr('mash.amount'),
+                  unit: 'kg',
+                  icon: Icons.scale_outlined,
+                ),
+                InputField(
+                  controller: yeastDoseController,
+                  label: strings.tr('mash.yeastDose'),
+                  unit: 'g/100 kg',
+                  icon: Icons.science_outlined,
+                ),
+                InputField(
+                  controller: brixController,
+                  label: strings.tr('mash.brix'),
+                  unit: '°Bx',
+                  icon: Icons.water_drop_outlined,
+                ),
+                if (errorKey != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Semantics(
+                      liveRegion: true,
+                      child: Text(
+                        strings.tr(errorKey!),
+                        style: TextStyle(color: theme.colorScheme.error),
+                      ),
+                    ),
+                  ),
+                SizedBox(
+                  height: 52,
+                  child: FilledButton.icon(
+                    onPressed: _calculate,
+                    icon: const Icon(Icons.calculate_outlined),
+                    label: Text(strings.tr('calculate')),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (result != null) ...[
+          const SizedBox(height: 16),
+          _ResultCard(
+            result: result!,
+            highBrix: (brix ?? 0) >= 24,
+            strings: strings,
+          ),
+        ],
+        const SizedBox(height: 16),
+        _GuidanceCard(
+          title: selectedFruit.name(languageCode),
+          category: selectedFruit.category,
+          note: selectedFruit.note(languageCode),
+          strings: strings,
+        ),
+        const SizedBox(height: 12),
+        _CommonProcessCard(strings: strings),
+        const SizedBox(height: 12),
+        _SourcesCard(strings: strings),
+      ],
+    );
+  }
+}
+
+class _ResultCard extends StatelessWidget {
+  final MashCalculationResult result;
+  final bool highBrix;
+  final AppLocalizations strings;
+
+  const _ResultCard({
+    required this.result,
+    required this.highBrix,
+    required this.strings,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Semantics(
+      liveRegion: true,
+      child: Card(
+        color: theme.colorScheme.primaryContainer,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                strings.tr('mash.result.title'),
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              _ResultLine(
+                label: strings.tr('mash.result.yeast'),
+                value: '${_format(result.yeastGrams)} g',
+              ),
+              _ResultLine(
+                label: strings.tr('mash.result.enzyme'),
+                value:
+                    '${_format(result.enzymeMinMl)}–${_format(result.enzymeMaxMl)} ml',
+              ),
+              _ResultLine(
+                label: strings.tr('mash.result.nutrient'),
+                value:
+                    '${_format(result.nutrientMinGrams)}–${_format(result.nutrientMaxGrams)} g',
+              ),
+              _ResultLine(
+                label: strings.tr('mash.result.abv'),
+                value:
+                    '${result.potentialAbvMin.toStringAsFixed(1)}–${result.potentialAbvMax.toStringAsFixed(1)} %',
+              ),
+              const Divider(height: 28),
+              _Notice(
+                icon: Icons.science_outlined,
+                text: strings.tr('mash.result.enzymeNote'),
+              ),
+              const SizedBox(height: 8),
+              _Notice(
+                icon: Icons.grain_outlined,
+                text: strings.tr('mash.result.nutrientNote'),
+              ),
+              const SizedBox(height: 8),
+              _Notice(
+                icon: Icons.analytics_outlined,
+                text: strings.tr('mash.result.abvNote'),
+              ),
+              if (highBrix) ...[
+                const SizedBox(height: 8),
+                _Notice(
+                  icon: Icons.warning_amber_rounded,
+                  text: strings.tr('mash.warning.highBrix'),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static String _format(double value) =>
+      value >= 100 ? value.toStringAsFixed(0) : value.toStringAsFixed(1);
+}
+
+class _ResultLine extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _ResultLine({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 7),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: Text(label)),
+        const SizedBox(width: 12),
+        Text(
+          value,
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  );
+}
+
+class _Notice extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _Notice({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Icon(icon, size: 18),
+      const SizedBox(width: 8),
+      Expanded(child: Text(text, style: Theme.of(context).textTheme.bodySmall)),
+    ],
+  );
+}
+
+class _GuidanceCard extends StatelessWidget {
+  final String title;
+  final MashFruitCategory category;
+  final String note;
+  final AppLocalizations strings;
+
+  const _GuidanceCard({
+    required this.title,
+    required this.category,
+    required this.note,
+    required this.strings,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final categoryKey = switch (category) {
+      MashFruitCategory.pome => 'mash.category.pome',
+      MashFruitCategory.stone => 'mash.category.stone',
+      MashFruitCategory.soft => 'mash.category.soft',
+    };
+    final preparationKey = switch (category) {
+      MashFruitCategory.pome => 'mash.preparation.pome',
+      MashFruitCategory.stone => 'mash.preparation.stone',
+      MashFruitCategory.soft => 'mash.preparation.soft',
+    };
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 4),
+            Text(strings.tr(categoryKey)),
+            const SizedBox(height: 16),
+            Text(
+              strings.tr('mash.guidance.preparation'),
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(strings.tr(preparationKey)),
+            const SizedBox(height: 12),
+            Text(
+              strings.tr('mash.guidance.specific'),
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(note),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CommonProcessCard extends StatelessWidget {
+  final AppLocalizations strings;
+
+  const _CommonProcessCard({required this.strings});
+
+  @override
+  Widget build(BuildContext context) => Card(
+    child: ExpansionTile(
+      leading: const Icon(Icons.fact_check_outlined),
+      title: Text(strings.tr('mash.process.title')),
+      childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      children: [
+        for (final key in const [
+          'mash.process.quality',
+          'mash.process.ph',
+          'mash.process.fermentation',
+          'mash.process.cap',
+          'mash.process.finish',
+          'mash.process.co2',
+          'mash.process.legal',
+        ])
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 7),
+                  child: Icon(Icons.circle, size: 6),
+                ),
+                const SizedBox(width: 10),
+                Expanded(child: Text(strings.tr(key))),
+              ],
+            ),
+          ),
+      ],
+    ),
+  );
+}
+
+class _SourcesCard extends StatelessWidget {
+  final AppLocalizations strings;
+
+  const _SourcesCard({required this.strings});
+
+  static const sources = <(String, String)>[
+    (
+      'OIV-OENO 466-2012 — refractometry and potential alcohol',
+      'https://www.oiv.int/public/medias/1448/oiv-oeno-466-2012-en.pdf',
+    ),
+    (
+      'Penn State Extension — Brix to approximate alcohol conversion range',
+      'https://extension.psu.edu/downloadable/download/sample/sample_id/82156/',
+    ),
+    (
+      'Erbslöh Distizym FM-Top — fruit-mash enzyme dosage',
+      'https://erbsloeh.com/produkt/distizym-fm-top/',
+    ),
+    (
+      'Erbslöh Distillation Guide — nutrient dosage and cool fermentation',
+      'https://scottlabsltd.com/content/files/documents/sll/craft%20distilling%20resources/distillation%20guide%20erbsloeh.pdf',
+    ),
+    (
+      'Pálinka Nemzeti Tanács — fruit processing and fermentation',
+      'https://www.palinkanemzetitanacs.hu/hu/hogyan-keszul-a-palinka.html',
+    ),
+    (
+      'Regulation (EU) 2019/787 — fruit-spirit requirements',
+      'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R0787',
+    ),
+    (
+      '2008. évi LXXIII. törvény — Pálinka Act',
+      'https://net.jogtar.hu/jogszabaly?docid=a0800073.tv',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) => Card(
+    child: ExpansionTile(
+      leading: const Icon(Icons.library_books_outlined),
+      title: Text(strings.tr('mash.sources.title')),
+      subtitle: Text(strings.tr('mash.sources.subtitle')),
+      childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      children: [
+        for (final source in sources)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  source.$1,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 2),
+                SelectableText(
+                  source.$2,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
+      ],
+    ),
+  );
+}

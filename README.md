@@ -3,7 +3,8 @@
 ![FokMester application](https://github.com/user-attachments/assets/62736a27-9383-485b-a260-e868aa451478)
 
 FokMester is a multilingual Flutter application for alcohol-strength
-temperature correction, dilution calculations, and liquid mixing.
+temperature correction, dilution calculations, liquid mixing, and
+fruit-mash planning.
 
 The project was built as a portfolio application with a focus on calculation
 accuracy, input validation, localization, accessibility, persistent local
@@ -20,6 +21,11 @@ data, and automated testing.
 - Dilution calculation for an existing spirit
 - Required spirit and water calculation for a desired final volume
 - Mixing calculation for two liquids with different alcohol strengths
+- Fruit-mash planner with 25 fruit-specific preparation profiles
+- Yeast calculation from the dosage printed on the selected product
+- Fruit-category-specific pectolytic enzyme and nutrient planning ranges
+- Potential alcohol range estimated from measured fruit Brix
+- Fermentation, pH, carbon-dioxide, stone-fruit, and legal safety guidance
 - Liter, deciliter, and milliliter support
 - Hungarian (default), English, and Romanian localization
 - Light, dark, and system themes
@@ -65,7 +71,8 @@ flutter test
 
 The current automated suite covers exact table values, interpolation,
 out-of-range measurements, incomplete source data, dilution, final-volume
-preparation, liquid mixing, and switching between all three languages.
+preparation, liquid mixing, mash ingredient scaling, fruit-category enzyme
+ranges, mash validation, and switching between all three languages.
 
 ## GitHub Pages deployment
 
@@ -96,6 +103,12 @@ test/          # Unit and widget tests
   liqueurs, or liquids containing significant dissolved substances.
 - Dilution and mixing calculations assume ideal volume addition. Real-world
   volume contraction can make the result approximate.
+- Mash enzyme ranges use the manufacturer's 15 °C reference values for
+  Distizym FM-Top. The exact product data sheet always takes precedence.
+- Potential mash alcohol is shown as a range because Brix measures all soluble
+  solids, not only fermentable glucose and fructose.
+- Acid dosage cannot be inferred from Brix; pH measurement and a bench trial
+  are required.
 
 ## License
 
