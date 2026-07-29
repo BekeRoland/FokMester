@@ -40,6 +40,14 @@ class AppLocalizations {
       'nav.mash': 'Cefre',
       'nav.guide': 'Útmutató',
       'nav.history': 'Előzmény',
+      'nav.calculations': 'Számítások',
+      'nav.distillation': 'Főzés',
+      'nav.more': 'Továbbiak',
+      'calculations.correction': 'Korrekció',
+      'calculations.dilution': 'Hígítás',
+      'more.title': 'Továbbiak',
+      'more.guideSubtitle': 'Mérési és hígítási tudnivalók',
+      'more.historySubtitle': 'Korábbi számítások megtekintése',
       'calculate': 'Számítás',
       'correction.title': 'Szeszfok-korrekció',
       'correction.range': 'Mérési tartomány: 10–98%, 5–30 °C',
@@ -143,6 +151,59 @@ class AppLocalizations {
           'A szén-dioxid színtelen, szagtalan és fulladást okozhat. Csak jól szellőző helyen erjesszen, ne hajoljon tartályba, és zárt helyen használjon CO₂-érzékelőt.',
       'mash.process.legal':
           'Magyar pálinkához cukrot nem szabad a gyümölcshöz adni. A lepárlást és az elnevezést mindig az aktuális helyi és jövedéki szabályok szerint végezze.',
+      'mash.continueDistillation': 'Folytatás a főzéssel',
+      'distillation.title': 'Főzési útmutató',
+      'distillation.subtitle':
+          'Válasszon gyümölcsöt és lepárlási módot a célzott ellenőrzőlistához.',
+      'distillation.fromMash': 'A cefretervből átvéve: {value} kg',
+      'distillation.method': 'Lepárlási mód',
+      'distillation.method.pot': 'Kisüsti',
+      'distillation.method.column': 'Tornyos',
+      'distillation.method.pot.body':
+          'Hagyományos, kétszeri szakaszos eljárás: az első főzés alszeszt készít, a második finomításkor történik az elő-, közép- és utópárlat érzékszervi elválasztása.',
+      'distillation.method.column.body':
+          'Az erősítőfeltétes vagy oszlopos berendezés egy menetben főz és finomít. A tányérok és a deflegmátor beállítása az alkohol- és aromakoncentrációt együtt alakítja.',
+      'distillation.risks': 'Fő kockázatok',
+      'distillation.risk.foaming': 'Habzás',
+      'distillation.risk.scorching': 'Leégés',
+      'distillation.risk.low': 'Alacsony',
+      'distillation.risk.medium': 'Közepes',
+      'distillation.risk.high': 'Magas',
+      'distillation.warning.stone':
+          'Csonthéjas: a magokat lehetőleg távolítsa el, törött magot ne főzzön. A hidrogén-cianid és etil-karbamát kockázata laborvizsgálat nélkül nem ítélhető meg biztosan.',
+      'distillation.warning.pectin':
+          'Pektindús gyümölcs: a metanol főként a pektin lebomlásából keletkezik, és nem távolítható el megbízhatóan egy egyszerű, rögzített előpárlat-vágással.',
+      'distillation.strategy.title': 'Ehhez az aromaprofilhoz',
+      'distillation.pot.delicate':
+          'Tartson egyenletes üzemet, és a finomításkor sűrűn vegyen kis érzékszervi mintát. A tisztaság mellett a könnyű gyümölcsillat megőrzése legyen a cél.',
+      'distillation.pot.balanced':
+          'A finomításnál fokozatosan, kis mintákkal keresse az elválasztási pontokat. A gyümölcsös középpárlatot se oldószeres előpárlat, se nehéz utópárlat ne fedje el.',
+      'distillation.pot.late':
+          'A jellegzetes telt aromák a finomítás későbbi részében is megjelenhetnek. Ne vágjon pusztán előre rögzített mennyiség alapján, de az utópárlati hibát ne engedje a középpárlatba.',
+      'distillation.column.delicate':
+          'A berendezés kézikönyve szerinti stabil, visszafogott aromatisztítást használjon. A túl erős deflegmáció csökkentheti a finom vezéraromák koncentrációját.',
+      'distillation.column.balanced':
+          'Tartsa stabilan a fűtést és a hűtést, majd kis érzékszervi mintákkal kövesse az átmeneteket. A deflegmációt ne csak a magas kihozatalhoz állítsa.',
+      'distillation.column.late':
+          'A túl erős deflegmáció a későn illó vezéraromákat túlságosan hátratolhatja. Csak a gyártó által engedett tartományban, érzékszervi visszajelzés alapján módosítson.',
+      'distillation.checklist': 'Főzési ellenőrzőlista',
+      'distillation.check.finished':
+          'Csak igazoltan kierjedt, hibamentes cefrét töltsön; a kész cefrét mielőbb párolja le.',
+      'distillation.check.charge':
+          'Ellenőrizze a tisztaságot, a szabad gőzutat és a gépkönyv szerinti töltési határt. Habzó vagy sűrű cefrénél hagyjon nagyobb szabad teret.',
+      'distillation.check.heat':
+          'Felügyelet mellett, fokozatosan fűtsön. Keverést, gőzköpenyt vagy habzásgátlót csak akkor használjon, ha azt a berendezés és a termék előírása engedi.',
+      'distillation.check.pot':
+          'Az első menetben készítsen alszeszt; az elő-, közép- és utópárlat végleges érzékszervi elválasztását a külön finomítás során végezze.',
+      'distillation.check.column':
+          'A tányérok, a deflegmátor, a fűtés és a hűtés gyártói beállításait együtt kezelje; egyetlen univerzális érték nem vihető át más berendezésre.',
+      'distillation.check.cuts':
+          'Az elválasztást illat, íz, mérés és tapasztalat együtt vezesse. A gyümölcs önmagában nem határoz meg biztonságos, rögzített liter- vagy hőfokértéket.',
+      'distillation.check.record':
+          'Rögzítse a cefrét, a berendezést, a beállításokat és a minták érzékszervi változását, hogy a következő főzés ellenőrizhetően javítható legyen.',
+      'distillation.safety.title': 'Biztonság és jogszerűség',
+      'distillation.safety.body':
+          'Az alkoholgőz tűzveszélyes, a forró és nyomás alatt álló berendezés súlyos sérülést okozhat. Soha ne zárja el a gőzutat, biztosítson szellőzést, tartsa be a gépkönyvet és a helyi jövedéki szabályokat; bizonytalanság esetén bízza engedélyezett főzdére.',
       'guide.title': 'Mérési útmutató',
       'guide.correct.title': 'Helyes mérés',
       'guide.correct.body':
@@ -168,6 +229,14 @@ class AppLocalizations {
       'nav.mash': 'Mash',
       'nav.guide': 'Guide',
       'nav.history': 'History',
+      'nav.calculations': 'Tools',
+      'nav.distillation': 'Distilling',
+      'nav.more': 'More',
+      'calculations.correction': 'Correction',
+      'calculations.dilution': 'Dilution',
+      'more.title': 'More',
+      'more.guideSubtitle': 'Measurement and dilution guidance',
+      'more.historySubtitle': 'View previous calculations',
       'calculate': 'Calculate',
       'correction.title': 'Alcohol strength correction',
       'correction.range': 'Measurement range: 10–98%, 5–30 °C',
@@ -273,6 +342,59 @@ class AppLocalizations {
           'Carbon dioxide is colourless, odourless and can cause suffocation. Ferment only with good ventilation, never lean into a tank, and use a CO₂ detector in enclosed areas.',
       'mash.process.legal':
           'Sugar must not be added when producing Hungarian pálinka. Always follow current local excise, distillation and naming rules.',
+      'mash.continueDistillation': 'Continue to distilling',
+      'distillation.title': 'Distillation guide',
+      'distillation.subtitle':
+          'Choose a fruit and distillation method for a focused checklist.',
+      'distillation.fromMash': 'Carried over from the mash plan: {value} kg',
+      'distillation.method': 'Distillation method',
+      'distillation.method.pot': 'Double pot still',
+      'distillation.method.column': 'Column still',
+      'distillation.method.pot.body':
+          'Traditional two-stage batch process: the first run produces low wines, while heads, heart and tails are separated by sensory judgement during the separate spirit run.',
+      'distillation.method.column.body':
+          'A plated or column still distils and rectifies in one run. The plates and dephlegmator shape alcohol concentration and fruit aroma together.',
+      'distillation.risks': 'Main risks',
+      'distillation.risk.foaming': 'Foaming',
+      'distillation.risk.scorching': 'Scorching',
+      'distillation.risk.low': 'Low',
+      'distillation.risk.medium': 'Medium',
+      'distillation.risk.high': 'High',
+      'distillation.warning.stone':
+          'Stone fruit: preferably remove stones and never distil broken ones. Hydrogen cyanide and ethyl-carbamate risk cannot be assessed reliably without laboratory testing.',
+      'distillation.warning.pectin':
+          'Pectin-rich fruit: methanol is formed mainly from pectin breakdown and cannot be removed reliably with one fixed heads cut.',
+      'distillation.strategy.title': 'For this aroma profile',
+      'distillation.pot.delicate':
+          'Keep operation steady and take frequent small sensory samples during the spirit run. Preserve light fruit aroma while achieving a clean heart.',
+      'distillation.pot.balanced':
+          'Approach the cuts gradually with small sensory samples. Neither solvent-like heads nor heavy tails should cover the fruity heart.',
+      'distillation.pot.late':
+          'Characteristic rich aromas may still arrive later in the spirit run. Do not cut only by a preset volume, but keep genuine tail faults out of the heart.',
+      'distillation.column.delicate':
+          'Use stable, restrained aroma purification within the equipment manual. Excessive dephlegmation can reduce delicate key aromas.',
+      'distillation.column.balanced':
+          'Keep heat and cooling stable and follow transitions with small sensory samples. Do not set dephlegmation solely for maximum yield.',
+      'distillation.column.late':
+          'Excessive dephlegmation can push low-volatility key aromas too far back. Adjust only within the manufacturer’s range and from sensory feedback.',
+      'distillation.checklist': 'Distillation checklist',
+      'distillation.check.finished':
+          'Charge only confirmed fully fermented, fault-free mash and distil finished mash promptly.',
+      'distillation.check.charge':
+          'Check cleanliness, an unobstructed vapour path and the manual’s fill limit. Leave additional headspace for foamy or dense mash.',
+      'distillation.check.heat':
+          'Heat gradually under continuous supervision. Use agitation, a steam jacket or antifoam only when approved by the still and product instructions.',
+      'distillation.check.pot':
+          'Produce low wines in the first run; make the final sensory separation of heads, heart and tails in the separate spirit run.',
+      'distillation.check.column':
+          'Treat plate, dephlegmator, heat and cooling settings as one system. No universal setting transfers safely between different stills.',
+      'distillation.check.cuts':
+          'Use aroma, taste, measurement and experience together for cuts. Fruit type alone does not define a safe fixed volume or temperature.',
+      'distillation.check.record':
+          'Record the mash, equipment, settings and sensory changes in samples so the next run can be improved reproducibly.',
+      'distillation.safety.title': 'Safety and legality',
+      'distillation.safety.body':
+          'Alcohol vapour is flammable, and hot or pressurised equipment can cause severe injury. Never block the vapour path, provide ventilation, follow the manual and local excise rules, and use a licensed distillery when unsure.',
       'guide.title': 'Measurement guide',
       'guide.correct.title': 'Correct measurement',
       'guide.correct.body':
@@ -298,6 +420,14 @@ class AppLocalizations {
       'nav.mash': 'Borhot',
       'nav.guide': 'Ghid',
       'nav.history': 'Istoric',
+      'nav.calculations': 'Calcule',
+      'nav.distillation': 'Distilare',
+      'nav.more': 'Mai mult',
+      'calculations.correction': 'Corecție',
+      'calculations.dilution': 'Diluare',
+      'more.title': 'Mai mult',
+      'more.guideSubtitle': 'Indicații pentru măsurare și diluare',
+      'more.historySubtitle': 'Vedeți calculele anterioare',
       'calculate': 'Calculează',
       'correction.title': 'Corectarea concentrației alcoolice',
       'correction.range': 'Interval de măsurare: 10–98%, 5–30 °C',
@@ -406,6 +536,59 @@ class AppLocalizations {
           'Dioxidul de carbon este incolor, inodor și poate provoca asfixiere. Fermentați numai cu ventilație bună, nu vă aplecați în rezervor și folosiți detector de CO₂ în spații închise.',
       'mash.process.legal':
           'Pentru pálinka maghiară nu se adaugă zahăr fructelor. Respectați întotdeauna normele locale actuale privind accizele, distilarea și denumirea.',
+      'mash.continueDistillation': 'Continuă cu distilarea',
+      'distillation.title': 'Ghid de distilare',
+      'distillation.subtitle':
+          'Alegeți fructul și metoda pentru o listă de verificare specifică.',
+      'distillation.fromMash': 'Preluat din planul borhotului: {value} kg',
+      'distillation.method': 'Metoda de distilare',
+      'distillation.method.pot': 'Cazan, două treceri',
+      'distillation.method.column': 'Coloană',
+      'distillation.method.pot.body':
+          'Procedeu tradițional discontinuu în două treceri: prima produce distilatul brut, iar la rafinarea separată se delimitează senzorial capetele, inima și cozile.',
+      'distillation.method.column.body':
+          'Instalația cu talere sau coloană distilează și rectifică într-o singură trecere. Talerele și deflegmatorul modelează împreună concentrația alcoolului și aroma fructului.',
+      'distillation.risks': 'Riscuri principale',
+      'distillation.risk.foaming': 'Spumare',
+      'distillation.risk.scorching': 'Ardere',
+      'distillation.risk.low': 'Scăzut',
+      'distillation.risk.medium': 'Mediu',
+      'distillation.risk.high': 'Ridicat',
+      'distillation.warning.stone':
+          'Fruct sâmburos: de preferință scoateți sâmburii și nu distilați niciodată sâmburi sparți. Riscul de acid cianhidric și carbamat de etil nu poate fi stabilit sigur fără analiză de laborator.',
+      'distillation.warning.pectin':
+          'Fruct bogat în pectină: metanolul provine în principal din degradarea pectinei și nu poate fi eliminat fiabil printr-o cantitate fixă de capete.',
+      'distillation.strategy.title': 'Pentru acest profil aromatic',
+      'distillation.pot.delicate':
+          'Mențineți funcționarea uniformă și luați frecvent probe senzoriale mici la rafinare. Păstrați aroma ușoară a fructului într-o inimă curată.',
+      'distillation.pot.balanced':
+          'Apropiați-vă treptat de separări, cu probe senzoriale mici. Nici capetele cu miros de solvent, nici cozile grele nu trebuie să acopere inima fructată.',
+      'distillation.pot.late':
+          'Aromele bogate caracteristice pot apărea mai târziu la rafinare. Nu separați numai după un volum prestabilit, dar nu lăsați defectele cozilor în inimă.',
+      'distillation.column.delicate':
+          'Folosiți o purificare aromatică stabilă și moderată, în limitele manualului. Deflegmarea excesivă poate reduce aromele-cheie delicate.',
+      'distillation.column.balanced':
+          'Mențineți stabile încălzirea și răcirea și urmăriți trecerile prin probe senzoriale mici. Nu reglați deflegmarea numai pentru randament maxim.',
+      'distillation.column.late':
+          'Deflegmarea excesivă poate împinge prea târziu aromele-cheie mai puțin volatile. Reglați numai în limitele producătorului și după evaluare senzorială.',
+      'distillation.checklist': 'Lista pentru distilare',
+      'distillation.check.finished':
+          'Încărcați numai borhot confirmat ca fermentat complet și fără defecte; distilați-l cât mai curând.',
+      'distillation.check.charge':
+          'Verificați curățenia, calea liberă a vaporilor și limita de umplere din manual. Lăsați spațiu liber suplimentar pentru borhot dens sau spumant.',
+      'distillation.check.heat':
+          'Încălziți treptat sub supraveghere continuă. Folosiți agitare, manta de abur sau antispumant numai dacă instalația și instrucțiunile produsului permit.',
+      'distillation.check.pot':
+          'Produceți distilatul brut la prima trecere; separarea senzorială finală a capetelor, inimii și cozilor se face la rafinarea distinctă.',
+      'distillation.check.column':
+          'Tratați reglajele talerelor, deflegmatorului, încălzirii și răcirii ca un singur sistem. Nicio valoare universală nu se transferă sigur între instalații.',
+      'distillation.check.cuts':
+          'Conduceți separările prin aromă, gust, măsurare și experiență împreună. Tipul fructului singur nu stabilește un volum sau o temperatură fixă sigură.',
+      'distillation.check.record':
+          'Notați borhotul, instalația, reglajele și schimbările senzoriale ale probelor pentru a îmbunătăți reproductibil următoarea distilare.',
+      'distillation.safety.title': 'Siguranță și legalitate',
+      'distillation.safety.body':
+          'Vaporii de alcool sunt inflamabili, iar echipamentul fierbinte sau presurizat poate provoca răni grave. Nu blocați calea vaporilor, asigurați ventilație, respectați manualul și normele locale de accize; dacă nu sunteți sigur, apelați la o distilerie autorizată.',
       'guide.title': 'Ghid de măsurare',
       'guide.correct.title': 'Măsurare corectă',
       'guide.correct.body':

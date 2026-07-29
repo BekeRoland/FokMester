@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
-import 'screens/home_screen.dart';
-import 'screens/dilution_screen.dart';
+import 'screens/calculations_screen.dart';
+import 'screens/distillation_screen.dart';
 import 'screens/mash_screen.dart';
-import 'screens/guide_screen.dart';
-import 'screens/history_screen.dart';
+import 'screens/more_screen.dart';
 import 'models/calculation_history.dart';
+import 'models/mash_fruit_profile.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -111,6 +111,9 @@ class _NavigationShellState extends State<NavigationShell> {
   static const _historyKey = 'calculation_history_v1';
   int _selectedIndex = 0;
   final List<CalculationHistoryItem> _history = [];
+  MashFruitProfile? _distillationFruit;
+  double? _distillationMashKg;
+  int _distillationRevision = 0;
 
   @override
   void initState() {
@@ -157,6 +160,15 @@ class _NavigationShellState extends State<NavigationShell> {
     _saveHistory();
   }
 
+  void _continueToDistillation(MashFruitProfile fruit, double mashKg) {
+    setState(() {
+      _distillationFruit = fruit;
+      _distillationMashKg = mashKg;
+      _distillationRevision++;
+      _selectedIndex = 2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context);
@@ -164,51 +176,28 @@ class _NavigationShellState extends State<NavigationShell> {
       appBar: AppBar(
         toolbarHeight: 44,
         title: const Text('FokMester', style: TextStyle(fontSize: 18)),
-        actions: [
-          PopupMenuButton<AppLanguage>(
-            tooltip: strings.tr('language'),
-            icon: const Icon(Icons.language_rounded),
-            initialValue: widget.language,
-            onSelected: widget.onLanguageChanged,
-            itemBuilder: (_) => AppLanguage.values
-                .map(
-                  (language) => PopupMenuItem(
-                    value: language,
-                    child: Text(language.nativeName),
-                  ),
-                )
-                .toList(),
-          ),
-          PopupMenuButton<ThemeMode>(
-            tooltip: strings.tr('theme'),
-            icon: const Icon(Icons.brightness_6_outlined),
-            initialValue: widget.themeMode,
-            onSelected: widget.onThemeChanged,
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                value: ThemeMode.system,
-                child: Text(strings.tr('system')),
-              ),
-              PopupMenuItem(
-                value: ThemeMode.light,
-                child: Text(strings.tr('light')),
-              ),
-              PopupMenuItem(
-                value: ThemeMode.dark,
-                child: Text(strings.tr('dark')),
-              ),
-            ],
-          ),
-        ],
       ),
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          HomeScreen(onCalculated: _addHistory),
-          DilutionScreen(onCalculated: _addHistory),
-          MashScreen(onCalculated: _addHistory),
-          const GuideScreen(),
-          HistoryScreen(items: _history, onClear: _clearHistory),
+          CalculationsScreen(onCalculated: _addHistory),
+          MashScreen(
+            onCalculated: _addHistory,
+            onContinueToDistillation: _continueToDistillation,
+          ),
+          DistillationScreen(
+            key: ValueKey(_distillationRevision),
+            initialFruit: _distillationFruit,
+            initialMashKg: _distillationMashKg,
+          ),
+          MoreScreen(
+            themeMode: widget.themeMode,
+            onThemeChanged: widget.onThemeChanged,
+            language: widget.language,
+            onLanguageChanged: widget.onLanguageChanged,
+            history: _history,
+            onClearHistory: _clearHistory,
+          ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -224,20 +213,12 @@ class _NavigationShellState extends State<NavigationShell> {
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: [
             NavigationDestination(
-              icon: Icon(Icons.thermostat_outlined, color: Color(0xFF4A6580)),
+              icon: Icon(Icons.calculate_outlined, color: Color(0xFF4A6580)),
               selectedIcon: Icon(
-                Icons.thermostat_rounded,
+                Icons.calculate_rounded,
                 color: Color(0xFF7EB8D4),
               ),
-              label: strings.tr('nav.temperature'),
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.water_drop_outlined, color: Color(0xFF4A6580)),
-              selectedIcon: Icon(
-                Icons.water_drop_rounded,
-                color: Color(0xFF7EB8D4),
-              ),
-              label: strings.tr('nav.dilution'),
+              label: strings.tr('nav.calculations'),
             ),
             NavigationDestination(
               icon: Icon(Icons.grass_outlined, color: Color(0xFF4A6580)),
@@ -245,14 +226,14 @@ class _NavigationShellState extends State<NavigationShell> {
               label: strings.tr('nav.mash'),
             ),
             NavigationDestination(
-              icon: Icon(Icons.menu_book_outlined),
-              selectedIcon: Icon(Icons.menu_book_rounded),
-              label: strings.tr('nav.guide'),
+              icon: Icon(Icons.local_fire_department_outlined),
+              selectedIcon: Icon(Icons.local_fire_department_rounded),
+              label: strings.tr('nav.distillation'),
             ),
             NavigationDestination(
-              icon: Icon(Icons.history_outlined),
-              selectedIcon: Icon(Icons.history_rounded),
-              label: strings.tr('nav.history'),
+              icon: Icon(Icons.more_horiz_rounded),
+              selectedIcon: Icon(Icons.more_rounded),
+              label: strings.tr('nav.more'),
             ),
           ],
         ),
