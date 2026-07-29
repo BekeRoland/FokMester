@@ -9,8 +9,14 @@ import '../widgets/input_field.dart';
 
 class MashScreen extends StatefulWidget {
   final ValueChanged<CalculationHistoryItem> onCalculated;
+  final void Function(MashFruitProfile fruit, double mashKg)?
+  onContinueToDistillation;
 
-  const MashScreen({super.key, required this.onCalculated});
+  const MashScreen({
+    super.key,
+    required this.onCalculated,
+    this.onContinueToDistillation,
+  });
 
   @override
   State<MashScreen> createState() => _MashScreenState();
@@ -174,6 +180,20 @@ class _MashScreenState extends State<MashScreen> {
             highBrix: (brix ?? 0) >= 24,
             strings: strings,
           ),
+          if (widget.onContinueToDistillation != null) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 54,
+              child: FilledButton.tonalIcon(
+                onPressed: () => widget.onContinueToDistillation!(
+                  selectedFruit,
+                  parseLocalizedNumber(mashAmountController.text)!,
+                ),
+                icon: const Icon(Icons.arrow_forward_rounded),
+                label: Text(strings.tr('mash.continueDistillation')),
+              ),
+            ),
+          ],
         ],
         const SizedBox(height: 16),
         _GuidanceCard(

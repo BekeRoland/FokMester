@@ -11,8 +11,8 @@ void main() {
     expect(find.text('Szeszfok-korrekció'), findsOneWidget);
     expect(find.text('Hígítás'), findsOneWidget);
     expect(find.text('Cefre'), findsOneWidget);
-    expect(find.text('Útmutató'), findsOneWidget);
-    expect(find.text('Előzmény'), findsOneWidget);
+    expect(find.text('Főzés'), findsOneWidget);
+    expect(find.text('Továbbiak'), findsOneWidget);
   });
 
   testWidgets('angol és román nyelvre vált', (tester) async {
@@ -20,21 +20,22 @@ void main() {
     await tester.pumpWidget(const PalinkaApp());
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byTooltip('Nyelv'));
+    await tester.tap(find.text('Továbbiak'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Magyar'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('English'));
     await tester.pumpAndSettle();
-    expect(find.text('Alcohol strength correction'), findsOneWidget);
-    expect(find.text('Dilution'), findsOneWidget);
+    expect(find.text('More'), findsWidgets);
     expect(find.text('Mash'), findsOneWidget);
+    expect(find.text('Distilling'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('Language'));
+    await tester.tap(find.text('English'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Română'));
     await tester.pumpAndSettle();
-    expect(find.text('Corectarea concentrației alcoolice'), findsOneWidget);
-    expect(find.text('Diluare'), findsOneWidget);
     expect(find.text('Borhot'), findsOneWidget);
+    expect(find.text('Distilare'), findsOneWidget);
   });
 
   testWidgets('cefrét számol és gyümölcsspecifikus útmutatót mutat', (
@@ -60,5 +61,36 @@ void main() {
     expect(find.text('20.0 g'), findsOneWidget);
     expect(find.text('5.0–15.0 ml'), findsOneWidget);
     expect(find.text('6.2–7.3 %'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -700));
+    await tester.pumpAndSettle();
+    final continueButton = find.text('Folytatás a főzéssel');
+    await tester.tap(continueButton);
+    await tester.pumpAndSettle();
+    expect(find.text('Főzési útmutató'), findsOneWidget);
+    expect(find.text('A cefretervből átvéve: 100 kg'), findsOneWidget);
+  });
+
+  testWidgets('a főzés módja kisüsti és tornyos között váltható', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(const PalinkaApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Főzés'));
+    await tester.pumpAndSettle();
+    expect(find.text('Kisüsti'), findsWidgets);
+    await tester.drag(find.byType(ListView), const Offset(0, -650));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('kétszeri szakaszos'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, 650));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Tornyos').first);
+    await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView), const Offset(0, -650));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('egy menetben főz és finomít'), findsOneWidget);
   });
 }

@@ -3,8 +3,8 @@
 ![FokMester application](https://github.com/user-attachments/assets/62736a27-9383-485b-a260-e868aa451478)
 
 FokMester is a multilingual Flutter application for alcohol-strength
-temperature correction, dilution calculations, liquid mixing, and
-fruit-mash planning.
+temperature correction, dilution calculations, liquid mixing, fruit-mash
+planning, and fruit-specific distillation guidance.
 
 The project was built as a portfolio application with a focus on calculation
 accuracy, input validation, localization, accessibility, persistent local
@@ -22,6 +22,12 @@ data, and automated testing.
 - Required spirit and water calculation for a desired final volume
 - Mixing calculation for two liquids with different alcohol strengths
 - Fruit-mash planner with 25 fruit-specific preparation profiles
+- Distillation guide for the same 25 fruits with foaming, scorching, stone,
+  pectin, and aroma-retention guidance
+- Separate workflows for traditional double pot distillation and one-pass
+  column distillation
+- Direct handoff of the selected fruit and mash mass from mash planning to the
+  distillation guide
 - Yeast calculation from the dosage printed on the selected product
 - Fruit-category-specific pectolytic enzyme and nutrient planning ranges
 - Potential alcohol range estimated from measured fruit Brix
@@ -31,6 +37,8 @@ data, and automated testing.
 - Light, dark, and system themes
 - Locally persisted calculation history
 - Responsive Material 3 interface with accessibility semantics
+- Four-item senior-friendly navigation with calculators grouped together and
+  secondary functions collected under More
 - Unit and widget tests
 
 ## Technology
@@ -72,7 +80,8 @@ flutter test
 The current automated suite covers exact table values, interpolation,
 out-of-range measurements, incomplete source data, dilution, final-volume
 preparation, liquid mixing, mash ingredient scaling, fruit-category enzyme
-ranges, mash validation, and switching between all three languages.
+ranges, mash validation, full distillation-profile coverage, switching between
+pot and column guidance, mash-to-distillation handoff, and all three languages.
 
 ## GitHub Pages deployment
 
@@ -85,7 +94,7 @@ artifact to GitHub Pages.
 ```text
 lib/
 ├── l10n/       # Hungarian, English and Romanian application text
-├── models/     # Calculation history model
+├── models/     # Calculation history, mash and distillation profiles
 ├── screens/    # Main application screens
 ├── services/   # Correction, dilution and mixing calculations
 ├── utils/      # Localized number parsing
@@ -109,6 +118,10 @@ test/          # Unit and widget tests
   solids, not only fermentable glucose and fructose.
 - Acid dosage cannot be inferred from Brix; pH measurement and a bench trial
   are required.
+- Distillation cut points and still settings are equipment- and batch-specific.
+  The app deliberately provides no universal temperature, volume, reflux, or
+  dephlegmator setting; the equipment manual, sensory judgement and laboratory
+  testing take priority.
 
 ## License
 
