@@ -184,8 +184,6 @@ class _MashScreenState extends State<MashScreen> {
         ),
         const SizedBox(height: 12),
         _CommonProcessCard(strings: strings),
-        const SizedBox(height: 12),
-        _SourcesCard(strings: strings),
       ],
     );
   }
@@ -407,73 +405,6 @@ class _CommonProcessCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Expanded(child: Text(strings.tr(key))),
-              ],
-            ),
-          ),
-      ],
-    ),
-  );
-}
-
-class _SourcesCard extends StatelessWidget {
-  final AppLocalizations strings;
-
-  const _SourcesCard({required this.strings});
-
-  static const sources = <(String, String)>[
-    (
-      'OIV-OENO 466-2012 — refractometry and potential alcohol',
-      'https://www.oiv.int/public/medias/1448/oiv-oeno-466-2012-en.pdf',
-    ),
-    (
-      'Penn State Extension — Brix to approximate alcohol conversion range',
-      'https://extension.psu.edu/downloadable/download/sample/sample_id/82156/',
-    ),
-    (
-      'Erbslöh Distizym FM-Top — fruit-mash enzyme dosage',
-      'https://erbsloeh.com/produkt/distizym-fm-top/',
-    ),
-    (
-      'Erbslöh Distillation Guide — nutrient dosage and cool fermentation',
-      'https://scottlabsltd.com/content/files/documents/sll/craft%20distilling%20resources/distillation%20guide%20erbsloeh.pdf',
-    ),
-    (
-      'Pálinka Nemzeti Tanács — fruit processing and fermentation',
-      'https://www.palinkanemzetitanacs.hu/hu/hogyan-keszul-a-palinka.html',
-    ),
-    (
-      'Regulation (EU) 2019/787 — fruit-spirit requirements',
-      'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32019R0787',
-    ),
-    (
-      '2008. évi LXXIII. törvény — Pálinka Act',
-      'https://net.jogtar.hu/jogszabaly?docid=a0800073.tv',
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) => Card(
-    child: ExpansionTile(
-      leading: const Icon(Icons.library_books_outlined),
-      title: Text(strings.tr('mash.sources.title')),
-      subtitle: Text(strings.tr('mash.sources.subtitle')),
-      childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      children: [
-        for (final source in sources)
-          Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  source.$1,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 2),
-                SelectableText(
-                  source.$2,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
               ],
             ),
           ),

@@ -143,9 +143,6 @@ class AppLocalizations {
           'A szén-dioxid színtelen, szagtalan és fulladást okozhat. Csak jól szellőző helyen erjesszen, ne hajoljon tartályba, és zárt helyen használjon CO₂-érzékelőt.',
       'mash.process.legal':
           'Magyar pálinkához cukrot nem szabad a gyümölcshöz adni. A lepárlást és az elnevezést mindig az aktuális helyi és jövedéki szabályok szerint végezze.',
-      'mash.sources.title': 'Szakmai források és módszertan',
-      'mash.sources.subtitle':
-          'A dózisok tervezési segédletek, nem helyettesítik a termék adatlapját és a mérést.',
       'guide.title': 'Mérési útmutató',
       'guide.correct.title': 'Helyes mérés',
       'guide.correct.body':
@@ -276,9 +273,6 @@ class AppLocalizations {
           'Carbon dioxide is colourless, odourless and can cause suffocation. Ferment only with good ventilation, never lean into a tank, and use a CO₂ detector in enclosed areas.',
       'mash.process.legal':
           'Sugar must not be added when producing Hungarian pálinka. Always follow current local excise, distillation and naming rules.',
-      'mash.sources.title': 'Technical sources and method',
-      'mash.sources.subtitle':
-          'Dosages are planning aids and do not replace product data sheets or measurements.',
       'guide.title': 'Measurement guide',
       'guide.correct.title': 'Correct measurement',
       'guide.correct.body':
@@ -412,9 +406,6 @@ class AppLocalizations {
           'Dioxidul de carbon este incolor, inodor și poate provoca asfixiere. Fermentați numai cu ventilație bună, nu vă aplecați în rezervor și folosiți detector de CO₂ în spații închise.',
       'mash.process.legal':
           'Pentru pálinka maghiară nu se adaugă zahăr fructelor. Respectați întotdeauna normele locale actuale privind accizele, distilarea și denumirea.',
-      'mash.sources.title': 'Surse tehnice și metodă',
-      'mash.sources.subtitle':
-          'Dozele sunt ajutoare de planificare și nu înlocuiesc fișa produsului sau măsurătorile.',
       'guide.title': 'Ghid de măsurare',
       'guide.correct.title': 'Măsurare corectă',
       'guide.correct.body':
