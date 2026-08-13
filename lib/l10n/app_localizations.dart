@@ -163,6 +163,21 @@ class AppLocalizations {
           'Hagyományos, kétszeri szakaszos eljárás: az első főzés alszeszt készít, a második finomításkor történik az elő-, közép- és utópárlat érzékszervi elválasztása.',
       'distillation.method.column.body':
           'Az erősítőfeltétes vagy oszlopos berendezés egy menetben főz és finomít. A tányérok és a deflegmátor beállítása az alkohol- és aromakoncentrációt együtt alakítja.',
+      'distillation.cuts.title': 'Gyümölcsspecifikus vágási ablakok',
+      'distillation.cuts.subtitle':
+          'A kifolyó párlat 20 °C-ra korrigált alkoholfoka alapján.',
+      'distillation.cuts.headsToHeart': 'Előpárlat → középpárlat',
+      'distillation.cuts.heartToTails': 'Középpárlat → utópárlat',
+      'distillation.cuts.pot.headsToHeart':
+          'Ebben a tartományban sűrítse a kis minták vizsgálatát. Csak a szúrós acetaldehides és oldószeres etil-acetátos jegyek eltűnése után váltson középpárlatra.',
+      'distillation.cuts.pot.heartToTails':
+          'Ebben a tartományban keresse az első nehéz, savanykás, főtt vagy olajos jegyet, és annak megjelenésekor váltson utópárlatra.',
+      'distillation.cuts.column.headsToHeart':
+          'Tornyos gépen a deflegmáció összenyomhatja az előpárlatot. A tartomány csak ellenőrzési ablak; a gépkönyv és a tiszta gyümölcsillat együtt irányadó.',
+      'distillation.cuts.column.heartToTails':
+          'A tányérszám és a deflegmátor miatt az utópárlat magas alkoholfokon is megjelenhet. Az első nehéz vagy fojtott jegynél váltson.',
+      'distillation.cuts.note':
+          'Nem automatikus kapcsolási érték. A valós vágási pontot a cefre alkoholtartalma, a főzési sebesség és a berendezés is eltolja. A mintát mindig hűtse 20 °C-ra; érzékszervi vizsgálathoz kis részt hígítson kb. 20–30%-ra.',
       'distillation.risks': 'Fő kockázatok',
       'distillation.risk.foaming': 'Habzás',
       'distillation.risk.scorching': 'Leégés',
@@ -354,6 +369,21 @@ class AppLocalizations {
           'Traditional two-stage batch process: the first run produces low wines, while heads, heart and tails are separated by sensory judgement during the separate spirit run.',
       'distillation.method.column.body':
           'A plated or column still distils and rectifies in one run. The plates and dephlegmator shape alcohol concentration and fruit aroma together.',
+      'distillation.cuts.title': 'Fruit-specific cut windows',
+      'distillation.cuts.subtitle':
+          'Based on running distillate strength corrected to 20 °C.',
+      'distillation.cuts.headsToHeart': 'Heads → heart',
+      'distillation.cuts.heartToTails': 'Heart → tails',
+      'distillation.cuts.pot.headsToHeart':
+          'Increase the frequency of small samples in this range. Switch to hearts only after sharp acetaldehyde and solvent-like ethyl-acetate notes have disappeared.',
+      'distillation.cuts.pot.heartToTails':
+          'Within this range, watch for the first heavy, sour, cooked or oily note and switch to tails when it appears.',
+      'distillation.cuts.column.headsToHeart':
+          'Rectification can compress the heads on a column still. Treat this only as an inspection window; the equipment manual and clean fruit aroma decide the cut.',
+      'distillation.cuts.column.heartToTails':
+          'Plates and dephlegmation can make tails appear at high strength. Switch at the first heavy or muted sensory note.',
+      'distillation.cuts.note':
+          'Not an automatic switching value. Mash alcohol, run speed and still configuration can move the true cut point. Cool every sample to 20 °C; dilute a small sensory sample to about 20–30% before assessment.',
       'distillation.risks': 'Main risks',
       'distillation.risk.foaming': 'Foaming',
       'distillation.risk.scorching': 'Scorching',
@@ -548,6 +578,21 @@ class AppLocalizations {
           'Procedeu tradițional discontinuu în două treceri: prima produce distilatul brut, iar la rafinarea separată se delimitează senzorial capetele, inima și cozile.',
       'distillation.method.column.body':
           'Instalația cu talere sau coloană distilează și rectifică într-o singură trecere. Talerele și deflegmatorul modelează împreună concentrația alcoolului și aroma fructului.',
+      'distillation.cuts.title': 'Ferestre de separare specifice fructului',
+      'distillation.cuts.subtitle':
+          'Pe baza tăriei distilatului la ieșire, corectată la 20 °C.',
+      'distillation.cuts.headsToHeart': 'Capete → inimă',
+      'distillation.cuts.heartToTails': 'Inimă → cozi',
+      'distillation.cuts.pot.headsToHeart':
+          'Luați mai des probe mici în acest interval. Treceți la inimă numai după dispariția notelor înțepătoare de acetaldehidă și de solvent ale acetatului de etil.',
+      'distillation.cuts.pot.heartToTails':
+          'În acest interval urmăriți prima notă grea, acră, fiartă sau uleioasă și treceți la cozi când aceasta apare.',
+      'distillation.cuts.column.headsToHeart':
+          'Rectificarea poate comprima capetele într-o coloană. Intervalul este doar pentru verificare; manualul instalației și aroma curată de fruct decid separarea.',
+      'distillation.cuts.column.heartToTails':
+          'Talerele și deflegmarea pot face cozile să apară la tărie ridicată. Schimbați fracția la prima notă grea sau închisă.',
+      'distillation.cuts.note':
+          'Nu este o valoare automată de comutare. Alcoolul din borhot, viteza și configurația instalației pot deplasa punctul real. Răciți proba la 20 °C; pentru evaluare diluați o probă mică la aproximativ 20–30%.',
       'distillation.risks': 'Riscuri principale',
       'distillation.risk.foaming': 'Spumare',
       'distillation.risk.scorching': 'Ardere',
