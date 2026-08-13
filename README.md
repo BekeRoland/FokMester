@@ -26,6 +26,8 @@ data, and automated testing.
   pectin, and aroma-retention guidance
 - Separate workflows for traditional double pot distillation and one-pass
   column distillation
+- Fruit-specific heads-to-heart and heart-to-tails monitoring windows for both
+  distillation methods, expressed as running distillate strength at 20 °C
 - Direct handoff of the selected fruit and mash mass from mash planning to the
   distillation guide
 - Yeast calculation from the dosage printed on the selected product
@@ -119,9 +121,10 @@ test/          # Unit and widget tests
 - Acid dosage cannot be inferred from Brix; pH measurement and a bench trial
   are required.
 - Distillation cut points and still settings are equipment- and batch-specific.
-  The app deliberately provides no universal temperature, volume, reflux, or
-  dephlegmator setting; the equipment manual, sensory judgement and laboratory
-  testing take priority.
+  The displayed alcohol-strength ranges are monitoring windows, not automatic
+  switching thresholds. The app deliberately provides no universal volume,
+  temperature, reflux, or dephlegmator setting; the equipment manual, sensory
+  judgement and laboratory testing take priority.
 
 ## License
 

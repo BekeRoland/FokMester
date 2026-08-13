@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../models/distillation_cut_profile.dart';
 import '../models/distillation_fruit_profile.dart';
 import '../models/mash_fruit_profile.dart';
 
@@ -31,6 +32,7 @@ class _DistillationScreenState extends State<DistillationScreen> {
     final strings = AppLocalizations.of(context);
     final languageCode = Localizations.localeOf(context).languageCode;
     final profile = distillationProfileFor(selectedFruit.id);
+    final cutProfile = distillationCutProfileFor(selectedFruit.id);
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -120,6 +122,14 @@ class _DistillationScreenState extends State<DistillationScreen> {
         const SizedBox(height: 12),
         _MethodCard(method: method, profile: profile, strings: strings),
         const SizedBox(height: 12),
+        _CutWindowCard(
+          method: method,
+          cuts: method == DistillationMethod.pot
+              ? cutProfile.pot
+              : cutProfile.column,
+          strings: strings,
+        ),
+        const SizedBox(height: 12),
         _FruitCard(
           fruitName: selectedFruit.name(languageCode),
           profile: profile,
@@ -136,6 +146,115 @@ class _DistillationScreenState extends State<DistillationScreen> {
   String _number(double value) => value == value.roundToDouble()
       ? value.toStringAsFixed(0)
       : value.toStringAsFixed(1);
+}
+
+class _CutWindowCard extends StatelessWidget {
+  final DistillationMethod method;
+  final DistillationMethodCuts cuts;
+  final AppLocalizations strings;
+
+  const _CutWindowCard({
+    required this.method,
+    required this.cuts,
+    required this.strings,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final methodKey = method == DistillationMethod.pot ? 'pot' : 'column';
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              strings.tr('distillation.cuts.title'),
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 4),
+            Text(strings.tr('distillation.cuts.subtitle')),
+            const SizedBox(height: 16),
+            _CutRow(
+              icon: Icons.arrow_forward_rounded,
+              title: strings.tr('distillation.cuts.headsToHeart'),
+              window: cuts.headsToHeart,
+              description: strings.tr(
+                'distillation.cuts.$methodKey.headsToHeart',
+              ),
+            ),
+            const Divider(height: 28),
+            _CutRow(
+              icon: Icons.arrow_downward_rounded,
+              title: strings.tr('distillation.cuts.heartToTails'),
+              window: cuts.heartToTails,
+              description: strings.tr(
+                'distillation.cuts.$methodKey.heartToTails',
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: Theme.of(
+                  context,
+                ).colorScheme.tertiaryContainer.withValues(alpha: .55),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.info_outline_rounded, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(child: Text(strings.tr('distillation.cuts.note'))),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CutRow extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final AbvCutWindow window;
+  final String description;
+
+  const _CutRow({
+    required this.icon,
+    required this.title,
+    required this.window,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Icon(icon, size: 22),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 3),
+            Text(description),
+          ],
+        ),
+      ),
+      const SizedBox(width: 12),
+      Text(
+        window.label,
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+      ),
+    ],
+  );
 }
 
 class _RiskCard extends StatelessWidget {

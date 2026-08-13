@@ -84,6 +84,8 @@ void main() {
     await tester.drag(find.byType(ListView), const Offset(0, -650));
     await tester.pumpAndSettle();
     expect(find.textContaining('kétszeri szakaszos'), findsOneWidget);
+    expect(find.text('78–72%'), findsOneWidget);
+    expect(find.text('56–50%'), findsOneWidget);
 
     await tester.drag(find.byType(ListView), const Offset(0, 650));
     await tester.pumpAndSettle();
@@ -92,5 +94,7 @@ void main() {
     await tester.drag(find.byType(ListView), const Offset(0, -650));
     await tester.pumpAndSettle();
     expect(find.textContaining('egy menetben főz és finomít'), findsOneWidget);
+    expect(find.text('88–82%'), findsOneWidget);
+    expect(find.text('74–66%'), findsOneWidget);
   });
 }
