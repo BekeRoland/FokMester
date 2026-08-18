@@ -28,6 +28,10 @@ data, and automated testing.
   column distillation
 - Fruit-specific heads-to-heart and heart-to-tails monitoring windows for both
   distillation methods, expressed as running distillate strength at 20 °C
+- Beginner-oriented sensory guidance for all 25 fruits, including the clean
+  target character, valuable late aromas, tail warning signs and common faults
+- Explicit methanol and laboratory-safety guidance that separates sensory cuts
+  from chemical and legal compliance
 - Direct handoff of the selected fruit and mash mass from mash planning to the
   distillation guide
 - Yeast calculation from the dosage printed on the selected product
@@ -83,7 +87,8 @@ The current automated suite covers exact table values, interpolation,
 out-of-range measurements, incomplete source data, dilution, final-volume
 preparation, liquid mixing, mash ingredient scaling, fruit-category enzyme
 ranges, mash validation, full distillation-profile coverage, switching between
-pot and column guidance, mash-to-distillation handoff, and all three languages.
+pot and column guidance, sensory-profile coverage, mash-to-distillation handoff,
+and all three languages.
 
 ## GitHub Pages deployment
 
