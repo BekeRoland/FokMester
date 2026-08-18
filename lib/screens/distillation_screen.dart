@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/distillation_cut_profile.dart';
 import '../models/distillation_fruit_profile.dart';
+import '../models/distillation_sensory_profile.dart';
 import '../models/mash_fruit_profile.dart';
 
 enum DistillationMethod { pot, column }
@@ -33,6 +34,7 @@ class _DistillationScreenState extends State<DistillationScreen> {
     final languageCode = Localizations.localeOf(context).languageCode;
     final profile = distillationProfileFor(selectedFruit.id);
     final cutProfile = distillationCutProfileFor(selectedFruit.id);
+    final sensoryProfile = distillationSensoryProfileFor(selectedFruit.id);
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -118,23 +120,35 @@ class _DistillationScreenState extends State<DistillationScreen> {
           ),
         ),
         const SizedBox(height: 12),
+        _FruitCard(
+          fruitName: selectedFruit.name(languageCode),
+          profile: profile,
+          strings: strings,
+        ),
+        const SizedBox(height: 12),
         _RiskCard(profile: profile, strings: strings),
         const SizedBox(height: 12),
-        _MethodCard(method: method, profile: profile, strings: strings),
+        _MethodCard(
+          method: method,
+          profile: profile,
+          sensoryProfile: sensoryProfile,
+          fruitName: selectedFruit.name(languageCode),
+          strings: strings,
+        ),
         const SizedBox(height: 12),
         _CutWindowCard(
           method: method,
           cuts: method == DistillationMethod.pot
               ? cutProfile.pot
               : cutProfile.column,
+          sensoryProfile: sensoryProfile,
+          languageCode: languageCode,
           strings: strings,
         ),
         const SizedBox(height: 12),
-        _FruitCard(
-          fruitName: selectedFruit.name(languageCode),
-          profile: profile,
-          strings: strings,
-        ),
+        _FaultGuide(strings: strings),
+        const SizedBox(height: 12),
+        _LaboratorySafetyCard(strings: strings),
         const SizedBox(height: 12),
         _Checklist(method: method, strings: strings),
         const SizedBox(height: 12),
@@ -151,13 +165,23 @@ class _DistillationScreenState extends State<DistillationScreen> {
 class _CutWindowCard extends StatelessWidget {
   final DistillationMethod method;
   final DistillationMethodCuts cuts;
+  final DistillationSensoryProfile sensoryProfile;
+  final String languageCode;
   final AppLocalizations strings;
 
   const _CutWindowCard({
     required this.method,
     required this.cuts,
+    required this.sensoryProfile,
+    required this.languageCode,
     required this.strings,
   });
+
+  String _description(String key, AbvCutWindow window) => strings
+      .tr(key)
+      .replaceAll('{high}', '${window.high}%')
+      .replaceAll('{low}', '${window.low}%')
+      .replaceAll('{range}', window.label);
 
   @override
   Widget build(BuildContext context) {
@@ -179,18 +203,27 @@ class _CutWindowCard extends StatelessWidget {
               icon: Icons.arrow_forward_rounded,
               title: strings.tr('distillation.cuts.headsToHeart'),
               window: cuts.headsToHeart,
-              description: strings.tr(
-                'distillation.cuts.$methodKey.headsToHeart',
-              ),
+              description:
+                  '${_description('distillation.cuts.$methodKey.headsToHeart', cuts.headsToHeart)}\n\n'
+                  '${strings.tr('distillation.sensory.cleanSignal')} '
+                  '${sensoryProfile.target(languageCode)}',
+            ),
+            const Divider(height: 28),
+            _SensoryHeartRow(
+              description: strings
+                  .tr('distillation.sensory.heartBody')
+                  .replaceAll('{target}', sensoryProfile.target(languageCode)),
+              strings: strings,
             ),
             const Divider(height: 28),
             _CutRow(
               icon: Icons.arrow_downward_rounded,
               title: strings.tr('distillation.cuts.heartToTails'),
               window: cuts.heartToTails,
-              description: strings.tr(
-                'distillation.cuts.$methodKey.heartToTails',
-              ),
+              description:
+                  '${_description('distillation.cuts.$methodKey.heartToTails', cuts.heartToTails)}\n\n'
+                  '${strings.tr('distillation.sensory.lateSignal')} '
+                  '${sensoryProfile.lateRun(languageCode)}',
             ),
             const SizedBox(height: 16),
             Container(
@@ -234,24 +267,70 @@ class _CutRow extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Icon(icon, size: 22),
+      Icon(icon, size: 24),
       const SizedBox(width: 12),
       Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 3),
+            Wrap(
+              spacing: 10,
+              runSpacing: 6,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    window.label,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
             Text(description),
           ],
         ),
       ),
+    ],
+  );
+}
+
+class _SensoryHeartRow extends StatelessWidget {
+  final String description;
+  final AppLocalizations strings;
+
+  const _SensoryHeartRow({required this.description, required this.strings});
+
+  @override
+  Widget build(BuildContext context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Icon(Icons.favorite_outline_rounded, size: 24),
       const SizedBox(width: 12),
-      Text(
-        window.label,
-        style: Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              strings.tr('distillation.sensory.heartTitle'),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(description),
+          ],
+        ),
       ),
     ],
   );
@@ -369,11 +448,15 @@ class _AlertLine extends StatelessWidget {
 class _MethodCard extends StatelessWidget {
   final DistillationMethod method;
   final DistillationFruitProfile profile;
+  final DistillationSensoryProfile sensoryProfile;
+  final String fruitName;
   final AppLocalizations strings;
 
   const _MethodCard({
     required this.method,
     required this.profile,
+    required this.sensoryProfile,
+    required this.fruitName,
     required this.strings,
   });
 
@@ -393,7 +476,7 @@ class _MethodCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              strings.tr('distillation.method.$methodKey'),
+              '${strings.tr('distillation.method.$methodKey')} – $fruitName',
               style: Theme.of(
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -407,6 +490,18 @@ class _MethodCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(strings.tr('distillation.$methodKey.$strategyKey')),
+            const SizedBox(height: 10),
+            Text(
+              strings
+                  .tr('distillation.method.preserve')
+                  .replaceAll(
+                    '{target}',
+                    sensoryProfile.target(
+                      Localizations.localeOf(context).languageCode,
+                    ),
+                  ),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
           ],
         ),
       ),
@@ -433,8 +528,109 @@ class _FruitCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(fruitName, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 4),
+          Text(
+            strings.tr('distillation.beforeHeating'),
+            style: Theme.of(context).textTheme.labelLarge,
+          ),
           const SizedBox(height: 8),
           Text(profile.focus(Localizations.localeOf(context).languageCode)),
+        ],
+      ),
+    ),
+  );
+}
+
+class _FaultGuide extends StatelessWidget {
+  final AppLocalizations strings;
+
+  const _FaultGuide({required this.strings});
+
+  @override
+  Widget build(BuildContext context) {
+    const faults = [
+      ('solvent', Icons.science_outlined),
+      ('vinegar', Icons.water_drop_outlined),
+      ('scorched', Icons.local_fire_department_outlined),
+      ('tails', Icons.opacity_outlined),
+      ('neutral', Icons.air_outlined),
+      ('musty', Icons.warning_amber_rounded),
+    ];
+    return Card(
+      child: ExpansionTile(
+        leading: const Icon(Icons.troubleshoot_rounded),
+        title: Text(
+          strings.tr('distillation.faults.title'),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(strings.tr('distillation.faults.subtitle')),
+        childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        children: [
+          for (final fault in faults)
+            Padding(
+              padding: const EdgeInsets.only(top: 14),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(fault.$2, size: 22),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          strings.tr('distillation.faults.${fault.$1}.title'),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          strings.tr('distillation.faults.${fault.$1}.body'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          const SizedBox(height: 14),
+          Text(
+            strings.tr('distillation.faults.note'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LaboratorySafetyCard extends StatelessWidget {
+  final AppLocalizations strings;
+
+  const _LaboratorySafetyCard({required this.strings});
+
+  @override
+  Widget build(BuildContext context) => Card(
+    color: Theme.of(context).colorScheme.tertiaryContainer,
+    child: Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.biotech_outlined, size: 26),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  strings.tr('distillation.laboratory.title'),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 6),
+                Text(strings.tr('distillation.laboratory.body')),
+              ],
+            ),
+          ),
         ],
       ),
     ),
@@ -462,7 +658,6 @@ class _Checklist extends StatelessWidget {
     ];
     return Card(
       child: ExpansionTile(
-        initiallyExpanded: true,
         leading: const Icon(Icons.fact_check_outlined),
         title: Text(strings.tr('distillation.checklist')),
         childrenPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),

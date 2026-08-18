@@ -163,21 +163,30 @@ class AppLocalizations {
           'Hagyományos, kétszeri szakaszos eljárás: az első főzés alszeszt készít, a második finomításkor történik az elő-, közép- és utópárlat érzékszervi elválasztása.',
       'distillation.method.column.body':
           'Az erősítőfeltétes vagy oszlopos berendezés egy menetben főz és finomít. A tányérok és a deflegmátor beállítása az alkohol- és aromakoncentrációt együtt alakítja.',
-      'distillation.cuts.title': 'Gyümölcsspecifikus vágási ablakok',
+      'distillation.beforeHeating': 'Főzés előtt ezt ellenőrizze',
+      'distillation.method.preserve': 'Megőrzendő karakter: {target}',
+      'distillation.cuts.title': 'Érzékszervi vágási útmutató',
       'distillation.cuts.subtitle':
-          'A kifolyó párlat 20 °C-ra korrigált alkoholfoka alapján.',
+          'A felső értéknél kezdje a sűrű ellenőrzést. A tartományon belül mindig a lehűtött minta változása döntsön.',
       'distillation.cuts.headsToHeart': 'Előpárlat → középpárlat',
       'distillation.cuts.heartToTails': 'Középpárlat → utópárlat',
       'distillation.cuts.pot.headsToHeart':
-          'Ebben a tartományban sűrítse a kis minták vizsgálatát. Csak a szúrós acetaldehides és oldószeres etil-acetátos jegyek eltűnése után váltson középpárlatra.',
+          'A kifolyó párlat {high} értékénél kezdje sűrűn ellenőrizni az előpárlat végét. A {range} tartományban csak akkor váltson középpárlatra, amikor a szúrós, oldószeres jegyek eltűntek és megjelent a tiszta gyümölcsillat.',
       'distillation.cuts.pot.heartToTails':
-          'Ebben a tartományban keresse az első nehéz, savanykás, főtt vagy olajos jegyet, és annak megjelenésekor váltson utópárlatra.',
+          'A kifolyó párlat {high} értékénél kezdje sűrűn figyelni az utópárlat megjelenését. A {range} tartományban az első nehéz, savanykás, főtt vagy olajos jegynél váltson utópárlatra; ne várjon automatikusan {low}-ig.',
       'distillation.cuts.column.headsToHeart':
-          'Tornyos gépen a deflegmáció összenyomhatja az előpárlatot. A tartomány csak ellenőrzési ablak; a gépkönyv és a tiszta gyümölcsillat együtt irányadó.',
+          'A kifolyó párlat {high} értékénél kezdje sűrűn ellenőrizni az előpárlat végét. Tornyos gépen a {range} tartományon belül a tiszta gyümölcsillat és a gépkönyv alapján váltson középpárlatra.',
       'distillation.cuts.column.heartToTails':
-          'A tányérszám és a deflegmátor miatt az utópárlat magas alkoholfokon is megjelenhet. Az első nehéz vagy fojtott jegynél váltson.',
+          'A kifolyó párlat {high} értékénél kezdje sűrűn figyelni az utópárlat megjelenését. A {range} tartományban az első nehéz vagy fojtott jegynél váltson; ne várjon automatikusan {low}-ig.',
       'distillation.cuts.note':
           'Nem automatikus kapcsolási érték. A valós vágási pontot a cefre alkoholtartalma, a főzési sebesség és a berendezés is eltolja. A mintát mindig hűtse 20 °C-ra; érzékszervi vizsgálathoz kis részt hígítson kb. 20–30%-ra.',
+      'distillation.sensory.cleanSignal':
+          'A keresendő tiszta gyümölcskarakter:',
+      'distillation.sensory.heartTitle': 'Tiszta középpárlat',
+      'distillation.sensory.heartBody':
+          'Egymást követő kis mintákat hasonlítson össze. A középpárlat legyen tiszta és egyre határozottabban ezt mutassa: {target} Ha a következő minta romlik, ne a kihozatal kedvéért tartsa meg.',
+      'distillation.sensory.lateSignal':
+          'A késői gyümölcsjegyek és az utópárlat megkülönböztetése:',
       'distillation.risks': 'Fő kockázatok',
       'distillation.risk.foaming': 'Habzás',
       'distillation.risk.scorching': 'Leégés',
@@ -201,6 +210,33 @@ class AppLocalizations {
           'Tartsa stabilan a fűtést és a hűtést, majd kis érzékszervi mintákkal kövesse az átmeneteket. A deflegmációt ne csak a magas kihozatalhoz állítsa.',
       'distillation.column.late':
           'A túl erős deflegmáció a későn illó vezéraromákat túlságosan hátratolhatja. Csak a gyártó által engedett tartományban, érzékszervi visszajelzés alapján módosítson.',
+      'distillation.faults.title': 'Gyors hibafelismerő',
+      'distillation.faults.subtitle':
+          'Mit jelezhet egy kellemetlen illat vagy íz?',
+      'distillation.faults.solvent.title': 'Szúrós, oldószeres',
+      'distillation.faults.solvent.body':
+          'Lehet még előpárlati átmenet, de hibás vagy túl meleg erjedés is erősítheti. Hasonlítsa össze a következő kis mintával; csak a tisztulás után váltson.',
+      'distillation.faults.vinegar.title': 'Ecetes, savanyú',
+      'distillation.faults.vinegar.body':
+          'Gyakran ecetsavas cefrehiba jele. A lepárlás nem teszi automatikusan hibamentessé az alapanyagot, ezért az ilyen tételt különösen szigorúan bírálja.',
+      'distillation.faults.scorched.title': 'Égett, karamellizált',
+      'distillation.faults.scorched.body':
+          'Leégésre vagy túl nagy helyi hőterhelésre utalhat. Ellenőrizze a keverést és a fűtést a gépkönyv szerint; az égett íz vágással ritkán javítható.',
+      'distillation.faults.tails.title': 'Nehéz, olajos, főtt',
+      'distillation.faults.tails.body':
+          'Jellemzően az utópárlati átmenet erősödése. Váltson külön gyűjtésre, majd a végső házasítást csak pihentetett, hígított minták alapján döntse el.',
+      'distillation.faults.neutral.title': 'Túl semleges, kevés gyümölcs',
+      'distillation.faults.neutral.body':
+          'Okozhatja gyenge alapanyag, hibás erjedés vagy túl erős aromatisztítás. Ne próbálja egy hibás, nehéz frakció visszaengedésével pótolni.',
+      'distillation.faults.musty.title': 'Dohos, penészes vagy romlott',
+      'distillation.faults.musty.body':
+          'Súlyos alapanyag- vagy cefrehibára utalhat. Ne tekintse egyszerű vágási problémának, és bizonytalanság esetén ne használja fel a tételt.',
+      'distillation.faults.note':
+          'Ezek lehetséges okok, nem laboratóriumi diagnózisok. Egyetlen illat, alkoholfok vagy hőmérséklet önmagában nem igazolja a párlat megfelelőségét.',
+      'distillation.laboratory.title':
+          'A metanol nem ismerhető fel szag alapján',
+      'distillation.laboratory.body':
+          'A metanol jelenlétét és a jogszabályi megfelelést sem kóstolás, sem az előpárlat mennyisége nem bizonyítja. Pektindús vagy csonthéjas alapanyagnál különösen fontos a helyes technológia; biztos eredményt csak laborvizsgálat ad.',
       'distillation.checklist': 'Főzési ellenőrzőlista',
       'distillation.check.finished':
           'Csak igazoltan kierjedt, hibamentes cefrét töltsön; a kész cefrét mielőbb párolja le.',
@@ -369,21 +405,30 @@ class AppLocalizations {
           'Traditional two-stage batch process: the first run produces low wines, while heads, heart and tails are separated by sensory judgement during the separate spirit run.',
       'distillation.method.column.body':
           'A plated or column still distils and rectifies in one run. The plates and dephlegmator shape alcohol concentration and fruit aroma together.',
-      'distillation.cuts.title': 'Fruit-specific cut windows',
+      'distillation.beforeHeating': 'Check this before heating',
+      'distillation.method.preserve': 'Character to preserve: {target}',
+      'distillation.cuts.title': 'Sensory cut guide',
       'distillation.cuts.subtitle':
-          'Based on running distillate strength corrected to 20 °C.',
+          'Begin frequent checks at the upper value. Within the window, let changes in the cooled sample decide.',
       'distillation.cuts.headsToHeart': 'Heads → heart',
       'distillation.cuts.heartToTails': 'Heart → tails',
       'distillation.cuts.pot.headsToHeart':
-          'Increase the frequency of small samples in this range. Switch to hearts only after sharp acetaldehyde and solvent-like ethyl-acetate notes have disappeared.',
+          'When the running distillate reaches {high}, begin checking frequently for the end of the heads. Within {range}, switch to hearts only after sharp solvent-like notes disappear and clean fruit aroma appears.',
       'distillation.cuts.pot.heartToTails':
-          'Within this range, watch for the first heavy, sour, cooked or oily note and switch to tails when it appears.',
+          'At {high}, begin checking frequently for the first signs of tails. Within {range}, switch at the first heavy, sour, cooked or oily note; do not automatically wait for {low}.',
       'distillation.cuts.column.headsToHeart':
-          'Rectification can compress the heads on a column still. Treat this only as an inspection window; the equipment manual and clean fruit aroma decide the cut.',
+          'At {high}, begin checking frequently for the end of the heads. On a column still, switch to hearts within {range} according to clean fruit aroma and the equipment manual.',
       'distillation.cuts.column.heartToTails':
-          'Plates and dephlegmation can make tails appear at high strength. Switch at the first heavy or muted sensory note.',
+          'At {high}, begin checking frequently for the first signs of tails. Within {range}, switch at the first heavy or muted note; do not automatically wait for {low}.',
       'distillation.cuts.note':
           'Not an automatic switching value. Mash alcohol, run speed and still configuration can move the true cut point. Cool every sample to 20 °C; dilute a small sensory sample to about 20–30% before assessment.',
+      'distillation.sensory.cleanSignal':
+          'The clean fruit character to look for:',
+      'distillation.sensory.heartTitle': 'Clean heart',
+      'distillation.sensory.heartBody':
+          'Compare consecutive small samples. The heart should remain clean and show this character more clearly: {target} If the next sample deteriorates, do not keep it merely to increase yield.',
+      'distillation.sensory.lateSignal':
+          'Distinguishing late fruit character from tails:',
       'distillation.risks': 'Main risks',
       'distillation.risk.foaming': 'Foaming',
       'distillation.risk.scorching': 'Scorching',
@@ -407,6 +452,32 @@ class AppLocalizations {
           'Keep heat and cooling stable and follow transitions with small sensory samples. Do not set dephlegmation solely for maximum yield.',
       'distillation.column.late':
           'Excessive dephlegmation can push low-volatility key aromas too far back. Adjust only within the manufacturer’s range and from sensory feedback.',
+      'distillation.faults.title': 'Quick fault guide',
+      'distillation.faults.subtitle':
+          'What can an unpleasant aroma or taste indicate?',
+      'distillation.faults.solvent.title': 'Sharp and solvent-like',
+      'distillation.faults.solvent.body':
+          'It may still be the heads transition, while faulty or overly warm fermentation can intensify it. Compare the next small sample and switch only after it cleans up.',
+      'distillation.faults.vinegar.title': 'Vinegary and sour',
+      'distillation.faults.vinegar.body':
+          'Often indicates an acetic mash fault. Distillation does not automatically repair faulty raw material, so assess such a batch particularly strictly.',
+      'distillation.faults.scorched.title': 'Burnt or caramelised',
+      'distillation.faults.scorched.body':
+          'May indicate scorching or excessive local heat. Check agitation and heat against the equipment manual; a burnt fault is rarely corrected by cuts.',
+      'distillation.faults.tails.title': 'Heavy, oily or cooked',
+      'distillation.faults.tails.body':
+          'Usually indicates a strengthening tail transition. Change to separate collection and decide any final blending only from rested, diluted samples.',
+      'distillation.faults.neutral.title': 'Too neutral, little fruit',
+      'distillation.faults.neutral.body':
+          'Possible causes include weak fruit, faulty fermentation or excessive rectification. Do not compensate by returning a faulty heavy fraction.',
+      'distillation.faults.musty.title': 'Musty, mouldy or spoiled',
+      'distillation.faults.musty.body':
+          'May indicate a serious raw-material or mash fault. Do not treat it as a simple cutting issue, and do not use the batch when safety is uncertain.',
+      'distillation.faults.note':
+          'These are possible causes, not laboratory diagnoses. No single aroma, strength or temperature proves that a spirit is compliant.',
+      'distillation.laboratory.title': 'Methanol cannot be identified by smell',
+      'distillation.laboratory.body':
+          'Neither tasting nor heads volume proves methanol content or legal compliance. Correct process is especially important for pectin-rich and stone fruit; only laboratory analysis gives a reliable result.',
       'distillation.checklist': 'Distillation checklist',
       'distillation.check.finished':
           'Charge only confirmed fully fermented, fault-free mash and distil finished mash promptly.',
@@ -578,21 +649,30 @@ class AppLocalizations {
           'Procedeu tradițional discontinuu în două treceri: prima produce distilatul brut, iar la rafinarea separată se delimitează senzorial capetele, inima și cozile.',
       'distillation.method.column.body':
           'Instalația cu talere sau coloană distilează și rectifică într-o singură trecere. Talerele și deflegmatorul modelează împreună concentrația alcoolului și aroma fructului.',
-      'distillation.cuts.title': 'Ferestre de separare specifice fructului',
+      'distillation.beforeHeating': 'Verificați înainte de încălzire',
+      'distillation.method.preserve': 'Caracter de păstrat: {target}',
+      'distillation.cuts.title': 'Ghid senzorial pentru separări',
       'distillation.cuts.subtitle':
-          'Pe baza tăriei distilatului la ieșire, corectată la 20 °C.',
+          'Începeți verificările dese la valoarea superioară. În interval, decide schimbarea probei răcite.',
       'distillation.cuts.headsToHeart': 'Capete → inimă',
       'distillation.cuts.heartToTails': 'Inimă → cozi',
       'distillation.cuts.pot.headsToHeart':
-          'Luați mai des probe mici în acest interval. Treceți la inimă numai după dispariția notelor înțepătoare de acetaldehidă și de solvent ale acetatului de etil.',
+          'Când distilatul la ieșire ajunge la {high}, începeți verificarea frecventă a sfârșitului capetelor. În intervalul {range}, treceți la inimă numai după dispariția notelor înțepătoare de solvent și apariția aromei curate de fruct.',
       'distillation.cuts.pot.heartToTails':
-          'În acest interval urmăriți prima notă grea, acră, fiartă sau uleioasă și treceți la cozi când aceasta apare.',
+          'La {high}, începeți să urmăriți frecvent apariția cozilor. În intervalul {range}, schimbați fracția la prima notă grea, acră, fiartă sau uleioasă; nu așteptați automat până la {low}.',
       'distillation.cuts.column.headsToHeart':
-          'Rectificarea poate comprima capetele într-o coloană. Intervalul este doar pentru verificare; manualul instalației și aroma curată de fruct decid separarea.',
+          'La {high}, începeți verificarea frecventă a sfârșitului capetelor. La instalația cu coloană, treceți la inimă în intervalul {range}, pe baza aromei curate de fruct și a manualului instalației.',
       'distillation.cuts.column.heartToTails':
-          'Talerele și deflegmarea pot face cozile să apară la tărie ridicată. Schimbați fracția la prima notă grea sau închisă.',
+          'La {high}, începeți să urmăriți frecvent apariția cozilor. În intervalul {range}, schimbați fracția la prima notă grea sau închisă; nu așteptați automat până la {low}.',
       'distillation.cuts.note':
           'Nu este o valoare automată de comutare. Alcoolul din borhot, viteza și configurația instalației pot deplasa punctul real. Răciți proba la 20 °C; pentru evaluare diluați o probă mică la aproximativ 20–30%.',
+      'distillation.sensory.cleanSignal':
+          'Caracterul curat de fruct care trebuie urmărit:',
+      'distillation.sensory.heartTitle': 'Inimă curată',
+      'distillation.sensory.heartBody':
+          'Comparați probe mici consecutive. Inima trebuie să rămână curată și să arate tot mai clar acest caracter: {target} Dacă proba următoare se deteriorează, nu o păstrați doar pentru randament.',
+      'distillation.sensory.lateSignal':
+          'Deosebirea aromelor târzii de fruct de cozi:',
       'distillation.risks': 'Riscuri principale',
       'distillation.risk.foaming': 'Spumare',
       'distillation.risk.scorching': 'Ardere',
@@ -616,6 +696,33 @@ class AppLocalizations {
           'Mențineți stabile încălzirea și răcirea și urmăriți trecerile prin probe senzoriale mici. Nu reglați deflegmarea numai pentru randament maxim.',
       'distillation.column.late':
           'Deflegmarea excesivă poate împinge prea târziu aromele-cheie mai puțin volatile. Reglați numai în limitele producătorului și după evaluare senzorială.',
+      'distillation.faults.title': 'Ghid rapid pentru defecte',
+      'distillation.faults.subtitle':
+          'Ce poate indica un miros sau gust neplăcut?',
+      'distillation.faults.solvent.title': 'Înțepător, de solvent',
+      'distillation.faults.solvent.body':
+          'Poate fi încă trecerea capetelor, dar fermentarea defectuoasă sau prea caldă îl poate intensifica. Comparați proba mică următoare și treceți numai după curățare.',
+      'distillation.faults.vinegar.title': 'Oțetit, acru',
+      'distillation.faults.vinegar.body':
+          'Indică adesea un defect acetic al borhotului. Distilarea nu repară automat materia primă defectă; evaluați un asemenea lot deosebit de strict.',
+      'distillation.faults.scorched.title': 'Ars, caramelizat',
+      'distillation.faults.scorched.body':
+          'Poate indica ardere sau încălzire locală excesivă. Verificați agitarea și încălzirea conform manualului; defectul ars se corectează rar prin separări.',
+      'distillation.faults.tails.title': 'Greu, uleios, fiert',
+      'distillation.faults.tails.body':
+          'Indică de regulă intensificarea trecerii spre cozi. Colectați separat și decideți amestecul final numai din probe odihnite și diluate.',
+      'distillation.faults.neutral.title': 'Prea neutru, puțin fruct',
+      'distillation.faults.neutral.body':
+          'Cauzele pot fi fructul slab, fermentarea defectuoasă sau rectificarea excesivă. Nu compensați prin readăugarea unei fracții grele defecte.',
+      'distillation.faults.musty.title': 'Mucegăit sau alterat',
+      'distillation.faults.musty.body':
+          'Poate indica un defect grav al materiei prime sau borhotului. Nu îl tratați ca simplă problemă de separare și nu folosiți lotul dacă siguranța este incertă.',
+      'distillation.faults.note':
+          'Acestea sunt cauze posibile, nu diagnostice de laborator. Niciun miros, tărie sau temperatură nu dovedește singur conformitatea distilatului.',
+      'distillation.laboratory.title':
+          'Metanolul nu poate fi recunoscut prin miros',
+      'distillation.laboratory.body':
+          'Nici degustarea, nici volumul capetelor nu dovedesc conținutul de metanol sau conformitatea legală. Tehnologia corectă este esențială mai ales la fructe bogate în pectină și sâmburoase; numai analiza de laborator oferă un rezultat sigur.',
       'distillation.checklist': 'Lista pentru distilare',
       'distillation.check.finished':
           'Încărcați numai borhot confirmat ca fermentat complet și fără defecte; distilați-l cât mai curând.',

@@ -81,20 +81,32 @@ void main() {
     await tester.tap(find.text('Főzés'));
     await tester.pumpAndSettle();
     expect(find.text('Kisüsti'), findsWidgets);
-    await tester.drag(find.byType(ListView), const Offset(0, -650));
-    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('78–72%'),
+      350,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.textContaining('kétszeri szakaszos'), findsOneWidget);
     expect(find.text('78–72%'), findsOneWidget);
     expect(find.text('56–50%'), findsOneWidget);
+    expect(find.textContaining('78% értékénél'), findsOneWidget);
+    expect(find.textContaining('56% értékénél'), findsOneWidget);
+    expect(find.text('Tiszta középpárlat'), findsOneWidget);
+    expect(find.textContaining('Tiszta, friss vagy érett alma'), findsWidgets);
 
-    await tester.drag(find.byType(ListView), const Offset(0, 650));
+    await tester.fling(find.byType(ListView), const Offset(0, 2200), 2500);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Tornyos').first);
     await tester.pumpAndSettle();
-    await tester.drag(find.byType(ListView), const Offset(0, -650));
-    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('88–82%'),
+      350,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(find.textContaining('egy menetben főz és finomít'), findsOneWidget);
     expect(find.text('88–82%'), findsOneWidget);
     expect(find.text('74–66%'), findsOneWidget);
+    expect(find.textContaining('88% értékénél'), findsOneWidget);
+    expect(find.textContaining('74% értékénél'), findsOneWidget);
   });
 }
