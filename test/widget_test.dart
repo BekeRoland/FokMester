@@ -53,22 +53,93 @@ void main() {
     await tester.enterText(find.byType(TextField).at(0), '100');
     await tester.enterText(find.byType(TextField).at(1), '20');
     await tester.enterText(find.byType(TextField).at(2), '12');
+    tester.testTextInput.hide();
+    await tester.pumpAndSettle();
     final calculateButton = find.text('Számítás');
-    await tester.ensureVisible(calculateButton);
+    await Scrollable.ensureVisible(
+      tester.element(calculateButton),
+      alignment: 0.5,
+    );
+    await tester.pumpAndSettle();
+    await tester.pumpAndSettle();
     await tester.tap(calculateButton);
     await tester.pumpAndSettle();
 
     expect(find.text('20.0 g'), findsOneWidget);
     expect(find.text('5.0–15.0 ml'), findsOneWidget);
     expect(find.text('6.2–7.3 %'), findsOneWidget);
+    expect(find.text('14–28 nap'), findsOneWidget);
 
     await tester.drag(find.byType(ListView), const Offset(0, -700));
     await tester.pumpAndSettle();
     final continueButton = find.text('Folytatás a főzéssel');
+    await tester.scrollUntilVisible(
+      continueButton,
+      250,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.drag(find.byType(ListView), const Offset(0, 140));
+    await tester.pumpAndSettle();
     await tester.tap(continueButton);
     await tester.pumpAndSettle();
     expect(find.text('Főzési útmutató'), findsOneWidget);
     expect(find.text('A cefretervből átvéve: 100 kg'), findsOneWidget);
+  });
+
+  testWidgets('a cefreterv elmenthető és megnyitható a cefrenaplóban', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(const PalinkaApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Cefre'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).at(0), '100');
+    await tester.enterText(find.byType(TextField).at(1), '20');
+    await tester.enterText(find.byType(TextField).at(2), '18');
+    tester.testTextInput.hide();
+    await tester.pumpAndSettle();
+    await Scrollable.ensureVisible(
+      tester.element(find.text('Számítás')),
+      alignment: 0.5,
+    );
+    await tester.pumpAndSettle();
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Számítás'));
+    await tester.pumpAndSettle();
+
+    await tester.drag(find.byType(ListView), const Offset(0, -500));
+    await tester.pumpAndSettle();
+    await Scrollable.ensureVisible(
+      tester.element(find.text('Mentés a cefrenaplóba')),
+      alignment: 0.5,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Mentés a cefrenaplóba'));
+    await tester.pumpAndSettle();
+    expect(find.text('Elmentve a cefrenaplóba'), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.text('Cefrenapló'),
+      -300,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.tap(find.text('Cefrenapló'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('1 elmentett tétel'), findsNothing);
+    expect(find.text('Alma'), findsOneWidget);
+    expect(find.textContaining('18 °Bx'), findsOneWidget);
   });
 
   testWidgets('a főzés módja kisüsti és tornyos között váltható', (

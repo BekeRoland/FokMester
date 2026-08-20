@@ -6,12 +6,17 @@ import 'l10n/app_localizations.dart';
 import 'screens/calculations_screen.dart';
 import 'screens/distillation_screen.dart';
 import 'screens/mash_screen.dart';
+import 'screens/mash_journal_screen.dart';
 import 'screens/more_screen.dart';
 import 'models/calculation_history.dart';
+import 'models/mash_batch.dart';
 import 'models/mash_fruit_profile.dart';
+import 'services/fermentation_service.dart';
+import 'services/notification_service.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.instance.initialize();
   runApp(const PalinkaApp());
 }
 
@@ -109,16 +114,43 @@ class NavigationShell extends StatefulWidget {
 
 class _NavigationShellState extends State<NavigationShell> {
   static const _historyKey = 'calculation_history_v1';
+  static const _mashBatchesKey = 'mash_batches_v1';
   int _selectedIndex = 0;
   final List<CalculationHistoryItem> _history = [];
+  final List<MashBatch> _mashBatches = [];
   MashFruitProfile? _distillationFruit;
   double? _distillationMashKg;
   int _distillationRevision = 0;
+  bool _mashBatchesLoaded = false;
+  String? _pendingNotificationBatchId;
 
   @override
   void initState() {
     super.initState();
+    NotificationService.instance.attachBatchSelectionHandler(
+      _openBatchFromNotification,
+    );
     _loadHistory();
+    _loadMashBatches();
+  }
+
+  @override
+  void didUpdateWidget(covariant NavigationShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.language != widget.language) {
+      for (final batch in _mashBatches) {
+        NotificationService.instance.scheduleForBatch(
+          batch,
+          languageCode: widget.language.code,
+        );
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    NotificationService.instance.detachBatchSelectionHandler();
+    super.dispose();
   }
 
   Future<void> _loadHistory() async {
@@ -145,6 +177,107 @@ class _NavigationShellState extends State<NavigationShell> {
       _historyKey,
       _history.map((item) => jsonEncode(item.toJson())).toList(),
     );
+  }
+
+  Future<void> _loadMashBatches() async {
+    try {
+      final preferences = await SharedPreferences.getInstance();
+      final stored = preferences.getStringList(_mashBatchesKey) ?? const [];
+      final loaded =
+          stored
+              .map(
+                (item) => MashBatch.fromJson(
+                  jsonDecode(item) as Map<String, dynamic>,
+                ),
+              )
+              .toList()
+            ..sort((a, b) => b.startedAt.compareTo(a.startedAt));
+      if (!mounted) return;
+      setState(() {
+        _mashBatches.addAll(loaded);
+        _mashBatchesLoaded = true;
+      });
+      for (final batch in loaded) {
+        NotificationService.instance.scheduleForBatch(
+          batch,
+          languageCode: widget.language.code,
+        );
+      }
+      _openPendingNotificationBatch();
+    } on Object {
+      // A hibás vagy régi helyi naplóadat nem akadályozhatja az app indulását.
+      if (mounted) {
+        setState(() => _mashBatchesLoaded = true);
+        _openPendingNotificationBatch();
+      }
+    }
+  }
+
+  Future<void> _saveMashBatches() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setStringList(
+      _mashBatchesKey,
+      _mashBatches.map((batch) => jsonEncode(batch.toJson())).toList(),
+    );
+  }
+
+  void _addMashBatch(MashBatch batch) {
+    setState(() => _mashBatches.insert(0, batch));
+    _saveMashBatches();
+    NotificationService.instance.scheduleForBatch(
+      batch,
+      languageCode: widget.language.code,
+    );
+  }
+
+  void _updateMashBatch(MashBatch updated) {
+    final index = _mashBatches.indexWhere((batch) => batch.id == updated.id);
+    if (index < 0) return;
+    final previous = _mashBatches[index];
+    final previousStatus = FermentationService.assess(previous).status;
+    final updatedStatus = FermentationService.assess(updated).status;
+    setState(() => _mashBatches[index] = updated);
+    _saveMashBatches();
+    NotificationService.instance.scheduleForBatch(
+      updated,
+      languageCode: widget.language.code,
+    );
+    if (previousStatus != updatedStatus) {
+      NotificationService.instance.notifyStatusChange(
+        updated,
+        updatedStatus,
+        languageCode: widget.language.code,
+      );
+    }
+  }
+
+  void _openBatchFromNotification(String batchId) {
+    if (!_mashBatchesLoaded) {
+      _pendingNotificationBatchId = batchId;
+      return;
+    }
+    final index = _mashBatches.indexWhere((batch) => batch.id == batchId);
+    if (index < 0) return;
+    final batch = _mashBatches[index];
+    setState(() => _selectedIndex = 1);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      Navigator.of(context).push<void>(
+        MaterialPageRoute(
+          builder: (_) => MashBatchDetailScreen(
+            batch: batch,
+            onBatchUpdated: _updateMashBatch,
+          ),
+        ),
+      );
+    });
+  }
+
+  void _openPendingNotificationBatch() {
+    final pending = _pendingNotificationBatchId;
+    if (pending == null) return;
+    _pendingNotificationBatchId = null;
+    _openBatchFromNotification(pending);
   }
 
   void _addHistory(CalculationHistoryItem item) {
@@ -184,6 +317,9 @@ class _NavigationShellState extends State<NavigationShell> {
           MashScreen(
             onCalculated: _addHistory,
             onContinueToDistillation: _continueToDistillation,
+            batches: _mashBatches,
+            onBatchSaved: _addMashBatch,
+            onBatchUpdated: _updateMashBatch,
           ),
           DistillationScreen(
             key: ValueKey(_distillationRevision),

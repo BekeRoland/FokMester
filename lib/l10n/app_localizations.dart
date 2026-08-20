@@ -35,6 +35,10 @@ class AppLocalizations {
       'system': 'Rendszer',
       'light': 'Világos',
       'dark': 'Sötét',
+      'yes': 'Igen',
+      'no': 'Nem',
+      'save': 'Mentés',
+      'days': 'nap',
       'nav.temperature': 'Hőmérséklet',
       'nav.dilution': 'Hígítás',
       'nav.mash': 'Cefre',
@@ -108,21 +112,30 @@ class AppLocalizations {
       'mash.amount': 'Cefre tömege',
       'mash.yeastDose': 'Élesztő címke szerinti adagja',
       'mash.brix': 'Gyümölcs mért Brix-foka',
+      'mash.yeastName': 'Felhasznált élesztő neve (nem kötelező)',
+      'mash.fermentationTemperature': 'Tervezett erjedési hőmérséklet',
+      'mash.startedAt': 'Cefrézés kezdete',
       'mash.error.amount': 'A cefre tömege 0 és 100 000 kg között lehet.',
       'mash.error.yeastDose':
           'Az élesztő adagja 0 és 500 g/100 kg között lehet.',
       'mash.error.brix': 'A Brix-érték 0 és 40 °Bx között lehet.',
+      'mash.error.fermentationTemperature':
+          'Az erjedési hőmérséklet 5 és 35 °C között lehet.',
+      'mash.error.startDate': 'A cefrézés kezdete nem lehet a jövőben.',
       'mash.result.title': 'Tervezett mennyiségek',
       'mash.result.yeast': 'Szükséges élesztő',
       'mash.result.enzyme': 'Pektinbontó enzim',
       'mash.result.nutrient': 'Komplex élesztőtáp',
       'mash.result.abv': 'Várható potenciális alkohol',
+      'mash.result.fermentationWindow': 'Becsült erjedési idő',
       'mash.result.enzymeNote':
           'Az enzimérték a Distizym FM-Top koncentrált folyékony, lepárlási enzim 15 °C-on megadott gyártói tartománya. Más terméknél mindig annak címkéje az irányadó; csak alacsony pektinészteráz-tartalmú, gyümölcspárlathoz ajánlott készítményt használjon.',
       'mash.result.nutrientNote':
           'A 25–40 g/100 kg tápanyagtartomány a Vitamon Combi hűvös gyümölcscefrés erjesztésre közölt referenciaértéke. Más összetételű tápnál a gyártói adagolás és időzítés az irányadó; pontos nitrogénigényhez YAN-mérés szükséges.',
       'mash.result.abvNote':
           'A Brix oldott szárazanyagot mér, nem kizárólag erjeszthető cukrot. A 0,52–0,61 × °Bx tartomány tervezési becslés; a tényleges eredményt a gyümölcs, az élesztő, a maradékcukor és a hőmérséklet módosítja.',
+      'mash.result.fermentationNote':
+          'Ez gyümölcsspecifikus tervezési időablak, nem készültségi határidő. A hőmérséklet, a pH, az élesztő, a tápanyag és a gyümölcs állapota jelentősen módosíthatja.',
       'mash.warning.highBrix':
           'Magas Brix: ellenőrizze az élesztő alkoholtűrését. Elakadt erjedésnél ne adjon automatikusan több tápot, hanem mérjen Brixet, hőmérsékletet és pH-t.',
       'mash.category.pome': 'Almatermésű vagy kemény húsú gyümölcs',
@@ -152,6 +165,109 @@ class AppLocalizations {
       'mash.process.legal':
           'Magyar pálinkához cukrot nem szabad a gyümölcshöz adni. A lepárlást és az elnevezést mindig az aktuális helyi és jövedéki szabályok szerint végezze.',
       'mash.continueDistillation': 'Folytatás a főzéssel',
+      'journal.title': 'Cefrenapló',
+      'journal.batchCount': '{count} elmentett tétel',
+      'journal.saveBatch': 'Mentés a cefrenaplóba',
+      'journal.savedButton': 'Elmentve a cefrenaplóba',
+      'journal.saved': 'A tétel bekerült a cefrenaplóba.',
+      'journal.empty.title': 'A cefrenapló még üres',
+      'journal.empty.body':
+          'Számoljon ki egy cefretervet, majd mentse el itt a tétel napi méréseit.',
+      'journal.startedAt': 'Kezdés',
+      'journal.amount': 'Cefre tömege',
+      'journal.initialBrix': 'Kezdeti Brix',
+      'journal.temperature': 'Erjedési hőmérséklet',
+      'journal.yeast': 'Élesztő',
+      'journal.yeastDose': 'Élesztő adagolása',
+      'journal.enzyme': 'Pektinbontó enzim',
+      'journal.nutrient': 'Élesztőtáp',
+      'journal.potentialAbv': 'Várható potenciális alkohol',
+      'journal.method': 'Brix mérési módja',
+      'journal.method.hydrometer': 'Sűrűségmérő / hidrométer',
+      'journal.method.refractometer': 'Refraktométer',
+      'journal.estimate': 'Becsült időablak',
+      'journal.addReading': 'Új mérés rögzítése',
+      'journal.measurements': 'Mérési előzmények',
+      'journal.currentBrix': 'Aktuális Brix',
+      'journal.sampleTemperature': 'Minta hőmérséklete (nem kötelező)',
+      'journal.sampleTemperatureShort': 'Minta',
+      'journal.gas.question': 'Tapasztalható még gázképződés?',
+      'journal.gas.yes': 'Még van gázképződés',
+      'journal.gas.no': 'Nincs észlelhető gázképződés',
+      'journal.note': 'Megjegyzés (nem kötelező)',
+      'journal.error.brix': 'A Brix-érték −10 és 40 °Bx között lehet.',
+      'journal.error.temperature':
+          'A minta hőmérséklete 0 és 40 °C között lehet.',
+      'journal.error.gas': 'Jelölje meg, hogy van-e még gázképződés.',
+      'journal.error.date':
+          'A mérés időpontja nem lehet a cefrézés kezdete előtt vagy a jövőben.',
+      'journal.status.active': 'Erjedés folyamatban',
+      'journal.status.active.body':
+          'Folytassa az azonos módszerrel végzett rendszeres mérést, és figyelje a hőmérsékletet, a gázképződést és az illatot.',
+      'journal.status.checkSoon': 'Esedékes az ellenőrzés',
+      'journal.status.checkSoon.body':
+          'A tétel elérte vagy túllépte a becsült időablakot, de még nincs elég stabil mérés a megítéléshez.',
+      'journal.status.stableTrend': 'Stabil trend – ellenőrizendő',
+      'journal.status.stableTrend.body':
+          'A Brix legalább 48 órája stabil, de a gázképződés vagy más feltétel miatt a kierjedés még nem valószínűsíthető.',
+      'journal.status.possiblyComplete': 'Valószínűleg kierjedt',
+      'journal.status.possiblyComplete.body':
+          'Három mérés legalább 48 órán át stabil, a Brix jelentősen csökkent és nincs észlelhető gázképződés. Ez nem laboratóriumi igazolás.',
+      'journal.status.stalled': 'Lehetséges elakadás',
+      'journal.status.stalled.body':
+          'A Brix túl korán vagy túl magas értéken állt meg. Ellenőrizze a hőmérsékletet, pH-t és az élesztő feltételeit; ne adjon vakon több tápot.',
+      'journal.refractometerNotice':
+          'Az alkohol torzítja a refraktométer nyers Brix-értékét. Az app ezért főként az azonos módon mért trendet figyeli; a maradékcukor biztos megállapításához korrekció vagy megfelelő laborvizsgálat szükséges.',
+      'journal.hydrometerNotice':
+          'A sűrűségmérő leolvasását a minta hőmérséklete és a lebegő gyümölcsrészek is befolyásolják. Szűrt, gázmentes mintát mérjen, és alkalmazza a műszer hőmérséklet-korrekcióját.',
+      'notifications.smart': 'Intelligens értesítések',
+      'notifications.smartSubtitle':
+          'Mérési emlékeztetők, időablakok és állapotjelzések',
+      'notifications.unsupported':
+          'Az ütemezett értesítések az Android alkalmazásban érhetők el.',
+      'notifications.time': 'Értesítések időpontja',
+      'notifications.dailyCheck': 'Napi cefreellenőrzés',
+      'notifications.dailyCheckSubtitle':
+          'Hőmérséklet, illat, habzás és cefrebunda ellenőrzése',
+      'notifications.permissionDenied':
+          'Az értesítési engedély nélkül nem lehet emlékeztetőt küldeni.',
+      'notification.measurement.title': '{fruit} – mérés esedékes',
+      'notification.measurement.body':
+          'Rögzítse a Brixet, a hőmérsékletet és a gázképződést.',
+      'notification.overdue.title': '{fruit} – elmaradt mérés',
+      'notification.overdue.body':
+          'A tervezett ellenőrzés óta legalább egy nap eltelt. Nyissa meg a cefrenaplót.',
+      'notification.windowStart.title':
+          '{fruit} – elkezdődött a becsült időablak',
+      'notification.windowStart.body':
+          'Mostantól naponta ellenőrizze a Brix-trendet és a gázképződést.',
+      'notification.windowEnd.title': '{fruit} – a becsült időablak véget ért',
+      'notification.windowEnd.body':
+          'Ha a mérés még nem stabil, ellenőrizze a hőmérsékletet, a pH-t és az élesztő feltételeit.',
+      'notification.dailyCheck.title': '{fruit} – napi cefreellenőrzés',
+      'notification.dailyCheck.body':
+          'Ellenőrizze a hőmérsékletet, az illatot, a habzást és szükség esetén a cefrebundát.',
+      'notification.dailyCheck.pome.title': '{fruit} – napi cefreellenőrzés',
+      'notification.dailyCheck.pome.body':
+          'Ellenőrizze a hőmérsékletet, az illatot, a felszínt és a sűrű cefre keverhetőségét.',
+      'notification.dailyCheck.stone.title': '{fruit} – napi cefreellenőrzés',
+      'notification.dailyCheck.stone.body':
+          'Ellenőrizze a habzást, a hőmérsékletet és a felúszó héj- vagy gyümölcsréteget.',
+      'notification.dailyCheck.soft.title': '{fruit} – napi cefreellenőrzés',
+      'notification.dailyCheck.soft.body':
+          'Ellenőrizze a hőmérsékletet, az illatot és merítse vissza kíméletesen a felúszó cefrebundát.',
+      'notification.dailyCheck.foaming.title': '{fruit} – habzás ellenőrzése',
+      'notification.dailyCheck.foaming.body':
+          'Ellenőrizze a habot, a tartály szabad terét és a hőmérsékletet.',
+      'notification.dailyCheck.dense.title': '{fruit} – sűrű cefre ellenőrzése',
+      'notification.dailyCheck.dense.body':
+          'Ellenőrizze a keverhetőséget, a hőmérsékletet és hogy a felszín nem száradt-e ki.',
+      'notification.stalled.title': '{fruit} – lehetséges elakadás',
+      'notification.stalled.body':
+          'A Brix túl korán vagy túl magas értéken állt meg. Ellenőrizze a hőmérsékletet és a pH-t.',
+      'notification.complete.title': '{fruit} – valószínűleg kierjedt',
+      'notification.complete.body':
+          'A mérések stabilak és nincs észlelhető gázképződés. Ellenőrizze a cefrét és tervezze meg a lepárlást.',
       'distillation.title': 'Főzési útmutató',
       'distillation.subtitle':
           'Válasszon gyümölcsöt és lepárlási módot a célzott ellenőrzőlistához.',
@@ -275,6 +391,10 @@ class AppLocalizations {
       'system': 'System',
       'light': 'Light',
       'dark': 'Dark',
+      'yes': 'Yes',
+      'no': 'No',
+      'save': 'Save',
+      'days': 'days',
       'nav.temperature': 'Temperature',
       'nav.dilution': 'Dilution',
       'nav.mash': 'Mash',
@@ -350,21 +470,30 @@ class AppLocalizations {
       'mash.amount': 'Mash mass',
       'mash.yeastDose': 'Yeast label dosage',
       'mash.brix': 'Measured fruit Brix',
+      'mash.yeastName': 'Yeast product used (optional)',
+      'mash.fermentationTemperature': 'Planned fermentation temperature',
+      'mash.startedAt': 'Mash started',
       'mash.error.amount': 'Mash mass must be between 0 and 100,000 kg.',
       'mash.error.yeastDose':
           'Yeast dosage must be between 0 and 500 g/100 kg.',
       'mash.error.brix': 'Brix must be between 0 and 40 °Bx.',
+      'mash.error.fermentationTemperature':
+          'Fermentation temperature must be between 5 and 35 °C.',
+      'mash.error.startDate': 'The mash start time cannot be in the future.',
       'mash.result.title': 'Planned quantities',
       'mash.result.yeast': 'Yeast required',
       'mash.result.enzyme': 'Pectolytic enzyme',
       'mash.result.nutrient': 'Complex yeast nutrient',
       'mash.result.abv': 'Estimated potential alcohol',
+      'mash.result.fermentationWindow': 'Estimated fermentation time',
       'mash.result.enzymeNote':
           'The enzyme value is the manufacturer range at 15 °C for Distizym FM-Top, a concentrated liquid distilling enzyme. For any other product, its label takes priority; use only a low-pectin-esterase product intended for fruit distilling.',
       'mash.result.nutrientNote':
           'The 25–40 g/100 kg nutrient range is the published Vitamon Combi reference for cool fruit-mash fermentation. For a different formulation, follow its dosage and timing; accurate nitrogen demand requires a YAN measurement.',
       'mash.result.abvNote':
           'Brix measures soluble solids, not only fermentable sugar. The 0.52–0.61 × °Bx range is a planning estimate; fruit, yeast, residual sugar and temperature change the actual result.',
+      'mash.result.fermentationNote':
+          'This is a fruit-specific planning window, not a completion deadline. Temperature, pH, yeast, nutrients and fruit condition can change it substantially.',
       'mash.warning.highBrix':
           'High Brix: check the yeast alcohol tolerance. If fermentation stalls, do not automatically add more nutrient; measure Brix, temperature and pH first.',
       'mash.category.pome': 'Pome or firm-fleshed fruit',
@@ -394,6 +523,109 @@ class AppLocalizations {
       'mash.process.legal':
           'Sugar must not be added when producing Hungarian pálinka. Always follow current local excise, distillation and naming rules.',
       'mash.continueDistillation': 'Continue to distilling',
+      'journal.title': 'Mash journal',
+      'journal.batchCount': '{count} saved batches',
+      'journal.saveBatch': 'Save to mash journal',
+      'journal.savedButton': 'Saved to mash journal',
+      'journal.saved': 'Batch saved to the mash journal.',
+      'journal.empty.title': 'The mash journal is empty',
+      'journal.empty.body':
+          'Calculate a mash plan, then save the batch here to track its measurements.',
+      'journal.startedAt': 'Started',
+      'journal.amount': 'Mash mass',
+      'journal.initialBrix': 'Initial Brix',
+      'journal.temperature': 'Fermentation temperature',
+      'journal.yeast': 'Yeast',
+      'journal.yeastDose': 'Yeast dosage',
+      'journal.enzyme': 'Pectolytic enzyme',
+      'journal.nutrient': 'Yeast nutrient',
+      'journal.potentialAbv': 'Estimated potential alcohol',
+      'journal.method': 'Brix measurement method',
+      'journal.method.hydrometer': 'Hydrometer',
+      'journal.method.refractometer': 'Refractometer',
+      'journal.estimate': 'Estimated window',
+      'journal.addReading': 'Add measurement',
+      'journal.measurements': 'Measurement history',
+      'journal.currentBrix': 'Current Brix',
+      'journal.sampleTemperature': 'Sample temperature (optional)',
+      'journal.sampleTemperatureShort': 'Sample',
+      'journal.gas.question': 'Is gas still being produced?',
+      'journal.gas.yes': 'Gas production is still visible',
+      'journal.gas.no': 'No visible gas production',
+      'journal.note': 'Note (optional)',
+      'journal.error.brix': 'Brix must be between −10 and 40 °Bx.',
+      'journal.error.temperature':
+          'Sample temperature must be between 0 and 40 °C.',
+      'journal.error.gas': 'Select whether gas is still being produced.',
+      'journal.error.date':
+          'The measurement cannot be before mash start or in the future.',
+      'journal.status.active': 'Fermentation in progress',
+      'journal.status.active.body':
+          'Continue regular measurements with the same method and monitor temperature, gas production and aroma.',
+      'journal.status.checkSoon': 'Check now',
+      'journal.status.checkSoon.body':
+          'The batch has reached or passed its estimated window, but there are not enough stable readings to assess it.',
+      'journal.status.stableTrend': 'Stable trend – verify',
+      'journal.status.stableTrend.body':
+          'Brix has been stable for at least 48 hours, but gas production or another condition prevents a likely-complete assessment.',
+      'journal.status.possiblyComplete': 'Likely fermented',
+      'journal.status.possiblyComplete.body':
+          'Three readings are stable across at least 48 hours, Brix dropped substantially and no gas is visible. This is not laboratory confirmation.',
+      'journal.status.stalled': 'Possible stalled fermentation',
+      'journal.status.stalled.body':
+          'Brix stopped too early or too high. Check temperature, pH and yeast conditions; do not add nutrients blindly.',
+      'journal.refractometerNotice':
+          'Alcohol distorts raw refractometer Brix readings. The app therefore follows the same-method trend; reliable residual sugar assessment requires correction or suitable laboratory analysis.',
+      'journal.hydrometerNotice':
+          'Hydrometer readings are affected by sample temperature and suspended fruit solids. Measure a filtered, degassed sample and apply the instrument temperature correction.',
+      'notifications.smart': 'Smart notifications',
+      'notifications.smartSubtitle':
+          'Measurement reminders, estimated windows and status alerts',
+      'notifications.unsupported':
+          'Scheduled notifications are available in the Android app.',
+      'notifications.time': 'Notification time',
+      'notifications.dailyCheck': 'Daily mash check',
+      'notifications.dailyCheckSubtitle':
+          'Check temperature, aroma, foaming and the floating cap',
+      'notifications.permissionDenied':
+          'Notification permission is required to send reminders.',
+      'notification.measurement.title': '{fruit} – measurement due',
+      'notification.measurement.body':
+          'Record Brix, temperature and visible gas production.',
+      'notification.overdue.title': '{fruit} – measurement overdue',
+      'notification.overdue.body':
+          'At least one day has passed since the planned check. Open the mash journal.',
+      'notification.windowStart.title':
+          '{fruit} – estimated window has started',
+      'notification.windowStart.body':
+          'From now on, check the Brix trend and gas production every day.',
+      'notification.windowEnd.title': '{fruit} – estimated window has ended',
+      'notification.windowEnd.body':
+          'If readings are not stable, check temperature, pH and yeast conditions.',
+      'notification.dailyCheck.title': '{fruit} – daily mash check',
+      'notification.dailyCheck.body':
+          'Check temperature, aroma, foaming and the floating cap when present.',
+      'notification.dailyCheck.pome.title': '{fruit} – daily mash check',
+      'notification.dailyCheck.pome.body':
+          'Check temperature, aroma, surface condition and whether the dense mash can be mixed.',
+      'notification.dailyCheck.stone.title': '{fruit} – daily mash check',
+      'notification.dailyCheck.stone.body':
+          'Check foaming, temperature and any floating skin or fruit layer.',
+      'notification.dailyCheck.soft.title': '{fruit} – daily mash check',
+      'notification.dailyCheck.soft.body':
+          'Check temperature and aroma, and gently submerge the floating cap.',
+      'notification.dailyCheck.foaming.title': '{fruit} – check foaming',
+      'notification.dailyCheck.foaming.body':
+          'Check foam, free vessel space and fermentation temperature.',
+      'notification.dailyCheck.dense.title': '{fruit} – check dense mash',
+      'notification.dailyCheck.dense.body':
+          'Check mixability, temperature and whether the surface is drying.',
+      'notification.stalled.title': '{fruit} – possible stalled fermentation',
+      'notification.stalled.body':
+          'Brix stopped too early or too high. Check temperature and pH.',
+      'notification.complete.title': '{fruit} – likely fermented',
+      'notification.complete.body':
+          'Readings are stable and no gas is visible. Check the mash and plan distillation.',
       'distillation.title': 'Distillation guide',
       'distillation.subtitle':
           'Choose a fruit and distillation method for a focused checklist.',
@@ -516,6 +748,10 @@ class AppLocalizations {
       'system': 'Sistem',
       'light': 'Luminoasă',
       'dark': 'Întunecată',
+      'yes': 'Da',
+      'no': 'Nu',
+      'save': 'Salvează',
+      'days': 'zile',
       'nav.temperature': 'Temperatură',
       'nav.dilution': 'Diluare',
       'nav.mash': 'Borhot',
@@ -593,22 +829,32 @@ class AppLocalizations {
       'mash.amount': 'Masa borhotului',
       'mash.yeastDose': 'Doza de drojdie de pe etichetă',
       'mash.brix': 'Brix măsurat al fructului',
+      'mash.yeastName': 'Drojdia folosită (opțional)',
+      'mash.fermentationTemperature': 'Temperatura planificată de fermentare',
+      'mash.startedAt': 'Începutul fermentării',
       'mash.error.amount':
           'Masa borhotului trebuie să fie între 0 și 100.000 kg.',
       'mash.error.yeastDose':
           'Doza de drojdie trebuie să fie între 0 și 500 g/100 kg.',
       'mash.error.brix': 'Valoarea Brix trebuie să fie între 0 și 40 °Bx.',
+      'mash.error.fermentationTemperature':
+          'Temperatura de fermentare trebuie să fie între 5 și 35 °C.',
+      'mash.error.startDate':
+          'Momentul începerii fermentării nu poate fi în viitor.',
       'mash.result.title': 'Cantități planificate',
       'mash.result.yeast': 'Drojdie necesară',
       'mash.result.enzyme': 'Enzimă pectolitică',
       'mash.result.nutrient': 'Nutrient complex pentru drojdie',
       'mash.result.abv': 'Alcool potențial estimat',
+      'mash.result.fermentationWindow': 'Durată estimată a fermentării',
       'mash.result.enzymeNote':
           'Valoarea enzimei este intervalul producătorului la 15 °C pentru Distizym FM-Top, o enzimă lichidă concentrată pentru distilare. Pentru orice alt produs prevalează eticheta sa; folosiți numai un produs cu activitate redusă de pectin-esterază, destinat distilatelor de fructe.',
       'mash.result.nutrientNote':
           'Intervalul de nutrient 25–40 g/100 kg este referința publicată pentru Vitamon Combi la fermentarea la rece a borhotului de fructe. Pentru altă formulă urmați dozarea și momentul aplicării de pe etichetă; necesarul exact de azot cere măsurarea YAN.',
       'mash.result.abvNote':
           'Brix măsoară solidele solubile, nu numai zahărul fermentescibil. Intervalul 0,52–0,61 × °Bx este o estimare; fructul, drojdia, zahărul rezidual și temperatura modifică rezultatul real.',
+      'mash.result.fermentationNote':
+          'Acesta este un interval orientativ specific fructului, nu un termen sigur. Temperatura, pH-ul, drojdia, nutrienții și starea fructului îl pot modifica semnificativ.',
       'mash.warning.highBrix':
           'Brix ridicat: verificați toleranța drojdiei la alcool. Dacă fermentarea se oprește, nu adăugați automat mai mult nutrient; măsurați mai întâi Brix, temperatura și pH-ul.',
       'mash.category.pome': 'Fruct semințos sau cu pulpă tare',
@@ -638,6 +884,115 @@ class AppLocalizations {
       'mash.process.legal':
           'Pentru pálinka maghiară nu se adaugă zahăr fructelor. Respectați întotdeauna normele locale actuale privind accizele, distilarea și denumirea.',
       'mash.continueDistillation': 'Continuă cu distilarea',
+      'journal.title': 'Jurnal de fermentare',
+      'journal.batchCount': '{count} loturi salvate',
+      'journal.saveBatch': 'Salvează în jurnal',
+      'journal.savedButton': 'Salvat în jurnal',
+      'journal.saved': 'Lotul a fost salvat în jurnal.',
+      'journal.empty.title': 'Jurnalul este gol',
+      'journal.empty.body':
+          'Calculați un plan de borhot, apoi salvați lotul aici pentru a urmări măsurătorile.',
+      'journal.startedAt': 'Început',
+      'journal.amount': 'Masa borhotului',
+      'journal.initialBrix': 'Brix inițial',
+      'journal.temperature': 'Temperatura fermentării',
+      'journal.yeast': 'Drojdie',
+      'journal.yeastDose': 'Doza de drojdie',
+      'journal.enzyme': 'Enzimă pectolitică',
+      'journal.nutrient': 'Nutrient pentru drojdie',
+      'journal.potentialAbv': 'Alcool potențial estimat',
+      'journal.method': 'Metoda de măsurare Brix',
+      'journal.method.hydrometer': 'Hidrometru',
+      'journal.method.refractometer': 'Refractometru',
+      'journal.estimate': 'Interval estimat',
+      'journal.addReading': 'Adaugă măsurătoare',
+      'journal.measurements': 'Istoricul măsurătorilor',
+      'journal.currentBrix': 'Brix actual',
+      'journal.sampleTemperature': 'Temperatura probei (opțional)',
+      'journal.sampleTemperatureShort': 'Probă',
+      'journal.gas.question': 'Mai există degajare de gaz?',
+      'journal.gas.yes': 'Degajarea de gaz este încă vizibilă',
+      'journal.gas.no': 'Nu există degajare vizibilă de gaz',
+      'journal.note': 'Notă (opțional)',
+      'journal.error.brix': 'Brix trebuie să fie între −10 și 40 °Bx.',
+      'journal.error.temperature':
+          'Temperatura probei trebuie să fie între 0 și 40 °C.',
+      'journal.error.gas': 'Selectați dacă mai există degajare de gaz.',
+      'journal.error.date':
+          'Măsurătoarea nu poate fi înainte de începutul fermentării sau în viitor.',
+      'journal.status.active': 'Fermentare în curs',
+      'journal.status.active.body':
+          'Continuați măsurătorile regulate cu aceeași metodă și urmăriți temperatura, degajarea de gaz și mirosul.',
+      'journal.status.checkSoon': 'Este necesară verificarea',
+      'journal.status.checkSoon.body':
+          'Lotul a ajuns la intervalul estimat, dar nu există suficiente măsurători stabile pentru evaluare.',
+      'journal.status.stableTrend': 'Tendință stabilă – verificați',
+      'journal.status.stableTrend.body':
+          'Brix-ul este stabil de cel puțin 48 de ore, dar degajarea de gaz sau altă condiție nu permite estimarea finalizării.',
+      'journal.status.possiblyComplete': 'Probabil fermentat complet',
+      'journal.status.possiblyComplete.body':
+          'Trei măsurători sunt stabile timp de cel puțin 48 de ore, Brix-ul a scăzut semnificativ și nu se vede gaz. Aceasta nu este o confirmare de laborator.',
+      'journal.status.stalled': 'Posibilă fermentare blocată',
+      'journal.status.stalled.body':
+          'Brix-ul s-a oprit prea devreme sau prea sus. Verificați temperatura, pH-ul și condițiile drojdiei; nu adăugați nutrienți fără măsurare.',
+      'journal.refractometerNotice':
+          'Alcoolul denaturează citirea Brix brută a refractometrului. Aplicația urmărește de aceea tendința măsurată prin aceeași metodă; zahărul rezidual sigur cere corecție sau analiză de laborator adecvată.',
+      'journal.hydrometerNotice':
+          'Citirea hidrometrului este influențată de temperatura probei și de particulele de fruct. Măsurați o probă filtrată și degazată și aplicați corecția de temperatură a instrumentului.',
+      'notifications.smart': 'Notificări inteligente',
+      'notifications.smartSubtitle':
+          'Mementouri de măsurare, intervale estimate și alerte de stare',
+      'notifications.unsupported':
+          'Notificările programate sunt disponibile în aplicația Android.',
+      'notifications.time': 'Ora notificărilor',
+      'notifications.dailyCheck': 'Verificare zilnică a borhotului',
+      'notifications.dailyCheckSubtitle':
+          'Verificați temperatura, mirosul, spuma și căciula plutitoare',
+      'notifications.permissionDenied':
+          'Permisiunea pentru notificări este necesară pentru mementouri.',
+      'notification.measurement.title': '{fruit} – măsurare necesară',
+      'notification.measurement.body':
+          'Înregistrați Brix-ul, temperatura și degajarea vizibilă de gaz.',
+      'notification.overdue.title': '{fruit} – măsurare restantă',
+      'notification.overdue.body':
+          'A trecut cel puțin o zi de la verificarea planificată. Deschideți jurnalul.',
+      'notification.windowStart.title':
+          '{fruit} – a început intervalul estimat',
+      'notification.windowStart.body':
+          'De acum verificați zilnic tendința Brix și degajarea de gaz.',
+      'notification.windowEnd.title':
+          '{fruit} – intervalul estimat s-a încheiat',
+      'notification.windowEnd.body':
+          'Dacă măsurătorile nu sunt stabile, verificați temperatura, pH-ul și drojdia.',
+      'notification.dailyCheck.title':
+          '{fruit} – verificare zilnică a borhotului',
+      'notification.dailyCheck.body':
+          'Verificați temperatura, mirosul, spuma și căciula plutitoare, dacă există.',
+      'notification.dailyCheck.pome.title':
+          '{fruit} – verificare zilnică a borhotului',
+      'notification.dailyCheck.pome.body':
+          'Verificați temperatura, mirosul, suprafața și dacă borhotul dens poate fi amestecat.',
+      'notification.dailyCheck.stone.title':
+          '{fruit} – verificare zilnică a borhotului',
+      'notification.dailyCheck.stone.body':
+          'Verificați spuma, temperatura și stratul plutitor de coji sau fruct.',
+      'notification.dailyCheck.soft.title':
+          '{fruit} – verificare zilnică a borhotului',
+      'notification.dailyCheck.soft.body':
+          'Verificați temperatura și mirosul și scufundați delicat căciula plutitoare.',
+      'notification.dailyCheck.foaming.title': '{fruit} – verificați spumarea',
+      'notification.dailyCheck.foaming.body':
+          'Verificați spuma, spațiul liber al vasului și temperatura.',
+      'notification.dailyCheck.dense.title':
+          '{fruit} – verificați borhotul dens',
+      'notification.dailyCheck.dense.body':
+          'Verificați amestecarea, temperatura și dacă suprafața se usucă.',
+      'notification.stalled.title': '{fruit} – posibilă fermentare blocată',
+      'notification.stalled.body':
+          'Brix-ul s-a oprit prea devreme sau prea sus. Verificați temperatura și pH-ul.',
+      'notification.complete.title': '{fruit} – probabil fermentat complet',
+      'notification.complete.body':
+          'Măsurătorile sunt stabile și nu se vede gaz. Verificați borhotul și planificați distilarea.',
       'distillation.title': 'Ghid de distilare',
       'distillation.subtitle':
           'Alegeți fructul și metoda pentru o listă de verificare specifică.',
