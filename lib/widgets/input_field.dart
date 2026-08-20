@@ -7,6 +7,7 @@ class InputField extends StatelessWidget {
   final String? unit;
   final IconData? icon;
   final String? errorText;
+  final bool allowNegative;
 
   const InputField({
     super.key,
@@ -15,6 +16,7 @@ class InputField extends StatelessWidget {
     this.unit,
     this.icon,
     this.errorText,
+    this.allowNegative = false,
   });
 
   @override
@@ -27,7 +29,9 @@ class InputField extends StatelessWidget {
         controller: controller,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp(r'^\d*[.,]?\d*$')),
+          FilteringTextInputFormatter.allow(
+            RegExp(allowNegative ? r'^-?\d*[.,]?\d*$' : r'^\d*[.,]?\d*$'),
+          ),
         ],
         style: TextStyle(
           color: cs.onSurface,
