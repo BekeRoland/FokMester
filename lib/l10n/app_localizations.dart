@@ -269,6 +269,25 @@ class AppLocalizations {
       'notification.complete.body':
           'A mérések stabilak és nincs észlelhető gázképződés. Ellenőrizze a cefrét és tervezze meg a lepárlást.',
       'distillation.title': 'Főzési útmutató',
+      'run.stage': 'Kisüsti főzés szakasza',
+      'run.stripping': '1. főzés – Alszesz',
+      'run.spirit': '2. főzés – Tisztálás',
+      'run.stripping.volume': 'Cefre térfogata',
+      'run.stripping.strength': 'Kierjedt cefre alkoholfoka',
+      'run.spirit.volume': 'Betöltött alszesz térfogata',
+      'run.spirit.strength': 'Betöltött alszesz alkoholfoka',
+      'run.lowWines': 'Várható alszesz',
+      'run.heads': 'Becsült előpárlat, a rézelejével együtt',
+      'run.hearts': 'Becsült középpárlat hígítás előtt',
+      'run.volumeError':
+          'Adjon meg 0-nál nagyobb térfogatot, legfeljebb 1 000 000 litert.',
+      'run.stripping.error':
+          'A becsléshez 0 feletti, legfeljebb 15% alkoholfokot adjon meg.',
+      'run.spirit.error': 'A becslés 10–30% közötti alszeszre használható.',
+      'run.stripping.note':
+          'Az első főzéskor alszeszt gyűjt. A becslés a cefrében lévő alkohol 90%-ának visszanyerésével és 20–25%-os átlagos alszesszel számol. A tényleges hozam az üsttől és a leállítás idejétől függ.',
+      'run.spirit.note':
+          'Az előpárlat becslése a betöltött térfogat 0,8–2%-a. A középpárlatnál 25%-os alszeszhez 30–35% térfogati hozammal számolunk, más szeszfoknál a bevitt alkohol arányában korrigálunk. A váltást a minták alapján döntse el. Az utópárlat mennyisége attól függ, meddig gyűjti.',
       'distillation.subtitle':
           'Válasszon gyümölcsöt és lepárlási módot a célzott ellenőrzőlistához.',
       'distillation.fromMash': 'A cefretervből átvéve: {value} kg',
@@ -627,6 +646,23 @@ class AppLocalizations {
       'notification.complete.body':
           'Readings are stable and no gas is visible. Check the mash and plan distillation.',
       'distillation.title': 'Distillation guide',
+      'run.stage': 'Pot still stage',
+      'run.stripping': '1st run – Stripping',
+      'run.spirit': '2nd run – Spirit run',
+      'run.stripping.volume': 'Mash volume',
+      'run.stripping.strength': 'Fermented mash strength',
+      'run.spirit.volume': 'Low wines charge volume',
+      'run.spirit.strength': 'Low wines charge strength',
+      'run.lowWines': 'Estimated low wines',
+      'run.heads': 'Estimated heads including foreshots',
+      'run.hearts': 'Estimated hearts before dilution',
+      'run.volumeError': 'Enter a volume above zero, up to 1,000,000 litres.',
+      'run.stripping.error': 'Enter a strength above zero and up to 15% ABV.',
+      'run.spirit.error': 'This estimate covers low wines at 10–30% ABV.',
+      'run.stripping.note':
+          'The first run collects low wines. The estimate assumes 90% alcohol recovery and an average low wines strength of 20–25% ABV. Yield depends on the still and when collection stops.',
+      'run.spirit.note':
+          'Heads are estimated at 0.8–2% of the charge volume. For hearts the model assumes a 30–35% volume yield from a 25% ABV charge and scales it by the alcohol charged. Assess samples to choose the cuts. Tails volume depends on when collection stops.',
       'distillation.subtitle':
           'Choose a fruit and distillation method for a focused checklist.',
       'distillation.fromMash': 'Carried over from the mash plan: {value} kg',
@@ -994,6 +1030,25 @@ class AppLocalizations {
       'notification.complete.body':
           'Măsurătorile sunt stabile și nu se vede gaz. Verificați borhotul și planificați distilarea.',
       'distillation.title': 'Ghid de distilare',
+      'run.stage': 'Etapa distilării la cazan',
+      'run.stripping': 'Prima distilare – Alcool brut',
+      'run.spirit': 'A doua distilare – Rafinare',
+      'run.stripping.volume': 'Volumul borhotului',
+      'run.stripping.strength': 'Tăria borhotului fermentat',
+      'run.spirit.volume': 'Volumul de alcool brut încărcat',
+      'run.spirit.strength': 'Tăria alcoolului brut încărcat',
+      'run.lowWines': 'Cantitate estimată de alcool brut',
+      'run.heads': 'Frunți estimate, inclusiv prima fracție',
+      'run.hearts': 'Mijloc estimat înainte de diluare',
+      'run.volumeError':
+          'Introduceți un volum pozitiv de cel mult 1 000 000 de litri.',
+      'run.stripping.error':
+          'Introduceți o tărie mai mare de zero și de cel mult 15% vol.',
+      'run.spirit.error': 'Estimarea se aplică alcoolului brut de 10–30% vol.',
+      'run.stripping.note':
+          'La prima distilare se colectează alcoolul brut. Estimarea presupune recuperarea a 90% din alcool și o tărie medie a distilatului de 20–25% vol. Cantitatea depinde de cazan și de momentul opririi.',
+      'run.spirit.note':
+          'Frunțile sunt estimate la 0,8–2% din volumul încărcat. Pentru mijloc se presupune un randament volumic de 30–35% la o încărcătură de 25% vol., ajustat proporțional cu alcoolul introdus. Evaluați probele pentru a separa fracțiile. Cantitatea de cozi depinde de momentul opririi colectării.',
       'distillation.subtitle':
           'Alegeți fructul și metoda pentru o listă de verificare specifică.',
       'distillation.fromMash': 'Preluat din planul borhotului: {value} kg',
