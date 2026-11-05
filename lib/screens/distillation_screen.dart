@@ -5,8 +5,12 @@ import '../models/distillation_cut_profile.dart';
 import '../models/distillation_fruit_profile.dart';
 import '../models/distillation_sensory_profile.dart';
 import '../models/mash_fruit_profile.dart';
+import '../utils/number_parser.dart';
+import '../widgets/input_field.dart';
 
 enum DistillationMethod { pot, column }
+
+enum _PotRun { stripping, spirit }
 
 class DistillationScreen extends StatefulWidget {
   final MashFruitProfile? initialFruit;
@@ -21,6 +25,24 @@ class DistillationScreen extends StatefulWidget {
 class _DistillationScreenState extends State<DistillationScreen> {
   late MashFruitProfile selectedFruit;
   DistillationMethod method = DistillationMethod.pot;
+  _PotRun run = _PotRun.stripping;
+  final mashVolume = TextEditingController();
+  final mashStrength = TextEditingController();
+  final lowWinesVolume = TextEditingController();
+  final lowWinesStrength = TextEditingController();
+
+  @override
+  void dispose() {
+    for (final field in [
+      mashVolume,
+      mashStrength,
+      lowWinesVolume,
+      lowWinesStrength,
+    ]) {
+      field.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -35,6 +57,9 @@ class _DistillationScreenState extends State<DistillationScreen> {
     final profile = distillationProfileFor(selectedFruit.id);
     final cutProfile = distillationCutProfileFor(selectedFruit.id);
     final sensoryProfile = distillationSensoryProfileFor(selectedFruit.id);
+    final stripping =
+        method == DistillationMethod.pot && run == _PotRun.stripping;
+    final spirit = method == DistillationMethod.pot && run == _PotRun.spirit;
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -115,42 +140,73 @@ class _DistillationScreenState extends State<DistillationScreen> {
                   onSelectionChanged: (value) =>
                       setState(() => method = value.first),
                 ),
+                if (method == DistillationMethod.pot) ...[
+                  const SizedBox(height: 20),
+                  DropdownButtonFormField<_PotRun>(
+                    initialValue: run,
+                    isExpanded: true,
+                    decoration: InputDecoration(
+                      labelText: strings.tr('run.stage'),
+                      border: const OutlineInputBorder(),
+                    ),
+                    items: [
+                      for (final stage in _PotRun.values)
+                        DropdownMenuItem(
+                          value: stage,
+                          child: Text(strings.tr('run.${stage.name}')),
+                        ),
+                    ],
+                    onChanged: (stage) {
+                      if (stage != null) setState(() => run = stage);
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  _YieldEstimate(
+                    stripping: stripping,
+                    volume: stripping ? mashVolume : lowWinesVolume,
+                    strength: stripping ? mashStrength : lowWinesStrength,
+                  ),
+                ],
               ],
             ),
           ),
         ),
         const SizedBox(height: 12),
-        _FruitCard(
-          fruitName: selectedFruit.name(languageCode),
-          profile: profile,
-          strings: strings,
-        ),
-        const SizedBox(height: 12),
-        _RiskCard(profile: profile, strings: strings),
-        const SizedBox(height: 12),
-        _MethodCard(
-          method: method,
-          profile: profile,
-          sensoryProfile: sensoryProfile,
-          fruitName: selectedFruit.name(languageCode),
-          strings: strings,
-        ),
-        const SizedBox(height: 12),
-        _CutWindowCard(
-          method: method,
-          cuts: method == DistillationMethod.pot
-              ? cutProfile.pot
-              : cutProfile.column,
-          sensoryProfile: sensoryProfile,
-          languageCode: languageCode,
-          strings: strings,
-        ),
-        const SizedBox(height: 12),
-        _FaultGuide(strings: strings),
-        const SizedBox(height: 12),
+        if (!spirit) ...[
+          _FruitCard(
+            fruitName: selectedFruit.name(languageCode),
+            profile: profile,
+            strings: strings,
+          ),
+          const SizedBox(height: 12),
+          _RiskCard(profile: profile, strings: strings),
+          const SizedBox(height: 12),
+        ],
+        if (!stripping) ...[
+          _MethodCard(
+            method: method,
+            profile: profile,
+            sensoryProfile: sensoryProfile,
+            fruitName: selectedFruit.name(languageCode),
+            strings: strings,
+          ),
+          const SizedBox(height: 12),
+          _CutWindowCard(
+            method: method,
+            cuts: method == DistillationMethod.pot
+                ? cutProfile.pot
+                : cutProfile.column,
+            sensoryProfile: sensoryProfile,
+            languageCode: languageCode,
+            strings: strings,
+          ),
+          const SizedBox(height: 12),
+          _FaultGuide(strings: strings),
+          const SizedBox(height: 12),
+        ],
         _LaboratorySafetyCard(strings: strings),
         const SizedBox(height: 12),
-        _Checklist(method: method, strings: strings),
+        _Checklist(method: method, run: run, strings: strings),
         const SizedBox(height: 12),
         _SafetyCard(strings: strings),
       ],
@@ -160,6 +216,106 @@ class _DistillationScreenState extends State<DistillationScreen> {
   String _number(double value) => value == value.roundToDouble()
       ? value.toStringAsFixed(0)
       : value.toStringAsFixed(1);
+}
+
+class _YieldEstimate extends StatelessWidget {
+  final bool stripping;
+  final TextEditingController volume;
+  final TextEditingController strength;
+
+  const _YieldEstimate({
+    required this.stripping,
+    required this.volume,
+    required this.strength,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context);
+    final stage = stripping ? 'stripping' : 'spirit';
+    return ListenableBuilder(
+      listenable: Listenable.merge([volume, strength]),
+      builder: (context, _) {
+        final litres = parseLocalizedNumber(volume.text);
+        final abv = parseLocalizedNumber(strength.text);
+        final validVolume =
+            litres != null &&
+            litres.isFinite &&
+            litres > 0 &&
+            litres <= 1000000;
+        final validAbv =
+            abv != null &&
+            abv.isFinite &&
+            (stripping ? abv > 0 && abv <= 15 : abv >= 10 && abv <= 30);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            InputField(
+              controller: volume,
+              label: strings.tr('run.$stage.volume'),
+              unit: 'L',
+              errorText: volume.text.isEmpty || validVolume
+                  ? null
+                  : strings.tr('run.volumeError'),
+            ),
+            InputField(
+              controller: strength,
+              label: strings.tr('run.$stage.strength'),
+              unit: '% vol',
+              errorText: strength.text.isEmpty || validAbv
+                  ? null
+                  : strings.tr('run.$stage.error'),
+            ),
+            if (validVolume && validAbv) ...[
+              if (stripping)
+                _range(
+                  context,
+                  'run.lowWines',
+                  litres * abv / 100 * 0.90 / 0.25,
+                  litres * abv / 100 * 0.90 / 0.20,
+                )
+              else ...[
+                // Sólyom, Pálinkafőzés: 0.3–0.5% foreshots plus 0.5–1.5% further heads by charge volume.
+                _range(context, 'run.heads', litres * 0.008, litres * 0.020),
+                // Scale the 30–35% reference heart yield to the same absolute alcohol at a 25% reference charge.
+                _range(
+                  context,
+                  'run.hearts',
+                  litres * abv / 25 * 0.30,
+                  litres * abv / 25 * 0.35,
+                ),
+              ],
+              const SizedBox(height: 8),
+            ],
+            Text(strings.tr('run.$stage.note')),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _range(BuildContext context, String key, double low, double high) {
+    final ml = high < 1;
+    String format(double value) {
+      final n = ml ? value * 1000 : value;
+      if (ml && n < 1) return '<1';
+      final text = n.toStringAsFixed(
+        ml || n >= 100
+            ? 0
+            : n < 1
+            ? 2
+            : 1,
+      );
+      return Localizations.localeOf(context).languageCode == 'en'
+          ? text
+          : text.replaceAll('.', ',');
+    }
+
+    return Text(
+      '${AppLocalizations.of(context).tr(key)}\n${format(low)}–${format(high)} ${ml ? 'ml' : 'L'}',
+      style: Theme.of(context).textTheme.titleMedium,
+    );
+  }
 }
 
 class _CutWindowCard extends StatelessWidget {
@@ -638,22 +794,29 @@ class _LaboratorySafetyCard extends StatelessWidget {
 }
 
 class _Checklist extends StatelessWidget {
+  final _PotRun run;
   final DistillationMethod method;
   final AppLocalizations strings;
 
-  const _Checklist({required this.method, required this.strings});
+  const _Checklist({
+    required this.method,
+    required this.run,
+    required this.strings,
+  });
 
   @override
   Widget build(BuildContext context) {
     final keys = [
-      'distillation.check.finished',
+      if (method == DistillationMethod.column || run == _PotRun.stripping)
+        'distillation.check.finished',
       'distillation.check.charge',
       'distillation.check.heat',
       if (method == DistillationMethod.pot)
         'distillation.check.pot'
       else
         'distillation.check.column',
-      'distillation.check.cuts',
+      if (method == DistillationMethod.column || run == _PotRun.spirit)
+        'distillation.check.cuts',
       'distillation.check.record',
     ];
     return Card(

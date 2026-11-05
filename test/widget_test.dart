@@ -152,6 +152,25 @@ void main() {
     await tester.tap(find.text('Főzés'));
     await tester.pumpAndSettle();
     expect(find.text('Kisüsti'), findsWidgets);
+    Future<void> fillCharge(String volume, String strength) async {
+      final fields = find.byType(TextField);
+      await tester.enterText(fields.at(0), volume);
+      await tester.enterText(fields.at(1), strength);
+      tester.testTextInput.hide();
+      await tester.pumpAndSettle();
+    }
+
+    await fillCharge('100', '8,0');
+    expect(find.textContaining('28,8–36,0 L'), findsOneWidget);
+    final stage = find.text('1. főzés – Alszesz');
+    await tester.ensureVisible(stage);
+    await tester.tap(stage);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('2. főzés – Tisztálás').last);
+    await tester.pumpAndSettle();
+    await fillCharge('20', '25');
+    expect(find.textContaining('160–400 ml'), findsOneWidget);
+    expect(find.textContaining('6,0–7,0 L'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.text('78–72%'),
       350,
@@ -169,6 +188,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Tornyos').first);
     await tester.pumpAndSettle();
+    expect(find.text('Kisüsti főzés szakasza'), findsNothing);
     await tester.scrollUntilVisible(
       find.text('88–82%'),
       350,
